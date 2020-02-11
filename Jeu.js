@@ -6,7 +6,7 @@ var config = {
 		default: 'arcade',
 		arcade: {
 			gravity: {y: 300},
-			debug: false
+			debug: true
 
 		}
 	},
@@ -25,17 +25,15 @@ var viej = 3;
 var saut = 2;
 var sauveSaut = 1;
 var attack = 1;
-<<<<<<< Updated upstream
-=======
 var direction = 'right';
 var boutonFeu;
->>>>>>> Stashed changes
 
 function init(){
 	var platforms;
 	var sol;
 	var player;
 	var playerj;
+	var tard;
 	var cursors;
 	var glands;
 	var scoreText;
@@ -43,15 +41,11 @@ function init(){
 	var scoreTextj;
 	var gameOverTextj;
 	var bomb;
-<<<<<<< Updated upstream
-	
-=======
 	var potions
->>>>>>> Stashed changes
 }
 
 function preload(){
-	this.load.image('background','assets/fond.jpg');
+	this.load.image('background','assets/back.png');
 	this.load.image('platform', 'assets/platform.png');
 	this.load.image('sol', 'assets/sol.png');
 	this.load.image('glands', 'assets/gland.png');
@@ -65,10 +59,8 @@ function preload(){
 	this.load.image('vie_2','assets/vie_2.png');
 	this.load.image('vie_1','assets/vie_1.png');
 	this.load.image('vie_0','assets/vie_0.png');
-<<<<<<< Updated upstream
-=======
 	this.load.image('potions','assets/potion.png');
->>>>>>> Stashed changes
+	this.load.spritesheet('tard','assets/Tard.png', {frameWidth: 24, frameHeight: 22});
 
 }
 
@@ -76,14 +68,18 @@ function create(){
 
 	//Monde
 	
-	this.add.image(400,300,'background');
+	this.add.image(500,300,'background');
 
 	platforms = this.physics.add.staticGroup();
 	platforms.create(600,400, 'platform');
+	platforms.create(500,300, 'platform');
 	platforms.create(50,250, 'platform');
+	platforms.create(900,150, 'platform');
+	platforms.create(800,450, 'platform');
+	platforms.create(220,480, 'platform');
 
 	sol = this.physics.add.staticGroup();
-	sol.create(300,600, 'sol').setScale(2).refreshBody();
+	sol.create(500,582, 'sol');
 
 
 	//Vie
@@ -114,11 +110,7 @@ function create(){
 
 
 	//Récupération des curseurs
-<<<<<<< Updated upstream
-	keys = this.input.keyboard.addKeys('A,Z,S,D');
-=======
 	keys = this.input.keyboard.addKeys('A,F,S,D');
->>>>>>> Stashed changes
 	cursors = this.input.keyboard.createCursorKeys();
 
 
@@ -190,6 +182,50 @@ function create(){
 		frameRate: 20
 	});
 
+
+	// Ennemis 
+	
+	tard = this.physics.add.sprite(100,100,'tard');
+	tard.setCollideWorldBounds(true);
+	tard.setBounce(0.02);
+	tard.body.setGravityY(200);
+	this.physics.add.collider(tard,platforms);
+	this.physics.add.collider(tard,sol);
+
+	tard1 = this.physics.add.sprite(280,380,'tard');
+	tard1.setCollideWorldBounds(true);
+	tard1.setBounce(0.02);
+	tard1.body.setGravityY(200);
+	this.physics.add.collider(tard1,platforms);
+	this.physics.add.collider(tard1,sol);
+	
+	
+	this.anims.create({
+		key: 'idle_tard',
+		frames: this.anims.generateFrameNumbers('tard', {start: 0, end: 2}),
+		frameRate: 5,
+		repeat: -1
+	});
+
+	this.anims.create({
+		key: 'mvt_tard',
+		frames: this.anims.generateFrameNumbers('tard', {start: 3, end: 9}),
+		frameRate: 5,
+		repeat: -1
+	});
+
+	this.anims.create({
+		key: 'attak_tard',
+		frames: this.anims.generateFrameNumbers('tard', {start: 10, end: 12}),
+		frameRate: 5,
+		repeat: -1
+	});
+
+
+	
+	
+	
+
 	//Glands
 
 	glands = this.physics.add.group({
@@ -223,9 +259,6 @@ function create(){
 	this.physics.add.collider(bombs, sol);
 	this.physics.add.collider(bombs, bombs, hitBombs, null, this);
 
-<<<<<<< Updated upstream
-
-=======
 	//Tirer
 
 	boutonFeu = this.input.keyboard.addKey('F');
@@ -242,7 +275,6 @@ function create(){
 	this.physics.add.collider(potions, sol);
 	this.physics.add.overlap(potions, player, collectPotion, null, this);
 	this.physics.add.overlap(potions, playerj, collectPotionj, null, this);
->>>>>>> Stashed changes
 }
 
 
@@ -254,13 +286,17 @@ function hitBomb(player, bomb){
 }
 
 function hitBombs(bomb, bomb){
-	bomb.destroy(true);
+	
 }
 
 function hitPlayerJ(player, playerj){
 	vie --;
 }
 
+
+function hitTard(player, tard){
+	vie --;
+}
 //Fonction récupération Glands
 
 function collectGland(player, gland){
@@ -299,9 +335,6 @@ function collectGlandj(playerj, gland){
 	};
 }
 
-<<<<<<< Updated upstream
-
-=======
 //fonction tir
 
 function tirer(player) {
@@ -359,7 +392,6 @@ function collectPotionj(playerj, potion){
 		bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
 	};
 }
->>>>>>> Stashed changes
 
 
 function update() {
@@ -368,17 +400,11 @@ function update() {
 	//Perte de vie
 
 	if (vie == 2){
-<<<<<<< Updated upstream
-		vie_3.destroy(true);
-	}
-	else if (vie == 1){
-=======
 		vie_2 = this.add.image(70,35,'vie_2');
 		vie_3.destroy(true);
 	}
 	else if (vie == 1){
 		vie_1 = this.add.image(70,35,'vie_1');
->>>>>>> Stashed changes
 		vie_2.destroy(true);
 	}
 	else if (vie == 0){
@@ -393,8 +419,6 @@ function update() {
 		scorej = 0;
 		viej = 3;
 	}
-<<<<<<< Updated upstream
-=======
 	if(vie == 3){
 		vie_3 = this.add.image(70,35,'vie_3');
 	}
@@ -404,7 +428,6 @@ function update() {
 
 
 
->>>>>>> Stashed changes
 
 	if (viej == 2){
 		vie_3j.destroy(true);
@@ -473,20 +496,14 @@ function update() {
 		player.anims.play('left', true);
 		player.setVelocityX(-200);
 		player.setFlipX(true);
-<<<<<<< Updated upstream
-=======
 		player.direction = 'left';
->>>>>>> Stashed changes
 	}
 	else if (cursors.right.isDown){
 		player.anims.play('left', true);
 		player.setFlipX(false);
 		player.setVelocityX(200);
-<<<<<<< Updated upstream
-=======
 		player.anims.play('right', true);
 		player.direction = 'left';
->>>>>>> Stashed changes
 
 	}
 
@@ -512,13 +529,9 @@ function update() {
 	}
 
 	
-<<<<<<< Updated upstream
-
-=======
 	if ( Phaser.Input.Keyboard.JustDown(boutonFeu)) {
 		tirer(player, direction);
 	}	
->>>>>>> Stashed changes
 	
 
 	//Déplacement du Joueur 2
@@ -559,6 +572,80 @@ function update() {
 		playerj.anims.play('leftj', true);
 		playerj.setFlipX(true);
 		playerj.setVelocityX(200);
+
+	}
+
+	if (tard.x >= 90){
+    	this.tweens.add({
+	    	targets: tard,
+	   	 	
+	   	 	x : -100,
+	    	// alpha: { start: 0, to: 1 },
+	    	// alpha: 1,
+	    	// alpha: '+=1',
+	    	ease: 'Linear',       // 'Cubic', 'Elastic', 'Bounce', 'Back'
+	    	duration: 8000,
+	    	repeat: -1,            // -1: infinity
+	    	yoyo: false
+		});
+		tard.anims.play('mvt_tard', true);
+		tard.setVelocityX(-200);
+		tard.setFlipX(true);
+	}
+	
+	if (tard.x <= 5){
+		this.tweens.add({
+	    	targets: tard,
+	   	 	
+	   	 	x : 120,
+	    	// alpha: { start: 0, to: 1 },
+	    	// alpha: 1,
+	    	// alpha: '+=1',
+	    	ease: 'Linear',       // 'Cubic', 'Elastic', 'Bounce', 'Back'
+	    	duration: 8000,
+	    	repeat: 0,            // -1: infinity
+	    	yoyo: false
+		});
+		tard.anims.play('mvt_tard', true);
+		tard.setFlipX(false);
+		tard.setVelocityX(200);
+
+	}
+
+	if (tard1.x >= 260){
+    	this.tweens.add({
+	    	targets: tard1,
+	   	 	
+	   	 	x : -100,
+	    	// alpha: { start: 0, to: 1 },
+	    	// alpha: 1,
+	    	// alpha: '+=1',
+	    	ease: 'Linear',       // 'Cubic', 'Elastic', 'Bounce', 'Back'
+	    	duration: 8000,
+	    	repeat: -1,            // -1: infinity
+	    	yoyo: false
+		});
+		tard1.anims.play('mvt_tard', true);
+		tard1.setVelocityX(-200);
+		tard1.setFlipX(true);
+	}
+	
+	if (tard1.x <= 180){
+		this.tweens.add({
+	    	targets: tard1,
+	   	 	
+	   	 	x : 520,
+	    	// alpha: { start: 0, to: 1 },
+	    	// alpha: 1,
+	    	// alpha: '+=1',
+	    	ease: 'Linear',       // 'Cubic', 'Elastic', 'Bounce', 'Back'
+	    	duration: 8000,
+	    	repeat: 0,            // -1: infinity
+	    	yoyo: false
+		});
+		tard1.anims.play('mvt_tard1', true);
+		tard1.setFlipX(false);
+		tard1.setVelocityX(200);
 
 	}
 
