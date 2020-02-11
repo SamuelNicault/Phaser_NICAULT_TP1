@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<!-- saved from url=(0103)https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/2019/04/12/ajouter-plusieurs-niveaux-a-un-jeu/ -->
+<html lang="fr-FR" class="has-offscreen"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="profile" href="http://gmpg.org/xfn/11">
+
+	    <script>
+        (function (exports, d) {
+            var _isReady = false,
+                _event,
+                _fns = [];
+
+            function onReady(event) {
+                d.removeEventListener("DOMContentLoaded", onReady);
+                _isReady = true;
+                _event = event;
+                _fns.forEach(function (_fn) {
+                    var fn = _fn[0],
+                        context = _fn[1];
+                    fn.call(context || exports, window.jQuery);
+                });
+            }
+
+            function onReadyIe(event) {
+                if (d.readyState === "complete") {
+                    d.detachEvent("onreadystatechange", onReadyIe);
+                    _isReady = true;
+                    _event = event;
+                    _fns.forEach(function (_fn) {
+                        var fn = _fn[0],
+                            context = _fn[1];
+                        fn.call(context || exports, event);
+                    });
+                }
+            }
+
+            d.addEventListener && d.addEventListener("DOMContentLoaded", onReady) ||
+            d.attachEvent && d.attachEvent("onreadystatechange", onReadyIe);
+
+            function domReady(fn, context) {
+                if (_isReady) {
+                    fn.call(context, _event);
+                }
+
+                _fns.push([fn, context]);
+            }
+
+            exports.mesmerizeDomReady = domReady;
+        })(window, document);
+    </script>
+    <title>[Phaser 3] Ajouter plusieurs niveaux à un jeu – 24h MMI</title>
+<link rel="dns-prefetch" href="https://fonts.googleapis.com/">
+<link rel="dns-prefetch" href="https://s.w.org/">
+<link rel="alternate" type="application/rss+xml" title="24h MMI » Flux" href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/feed/">
+<link rel="alternate" type="application/rss+xml" title="24h MMI » Flux des commentaires" href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/comments/feed/">
+<link rel="alternate" type="application/rss+xml" title="24h MMI » [Phaser 3] Ajouter plusieurs niveaux à un jeu Flux des commentaires" href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/2019/04/12/ajouter-plusieurs-niveaux-a-un-jeu/feed/">
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11.2.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11.2.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/web-mmi.iutbeziers.fr\/24hMMI\/wordpress\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.1"}};
+			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55358,56760,9792,65039],[55358,56760,8203,9792,65039]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script><script src="./niveaux_files/wp-emoji-release.min.js.téléchargement" type="text/javascript" defer=""></script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel="stylesheet" id="wp-block-library-css" href="./niveaux_files/style.min.css" type="text/css" media="all">
+<link rel="stylesheet" id="mesmerize-parent-css" href="./niveaux_files/style.min(1).css" type="text/css" media="all">
+<link rel="stylesheet" id="mesmerize-style-css" href="./niveaux_files/style.min(2).css" type="text/css" media="all">
+<style id="mesmerize-style-inline-css" type="text/css">
+img.logo.dark, img.custom-logo{width:auto;max-height:70px !important;}
+/** cached kirki style */@media screen and (min-width: 768px){.header-homepage{background-position:center center;}.header{background-position:center center;}}.header-homepage:not(.header-slide).color-overlay:before{background:#000000;}.header-homepage:not(.header-slide) .background-overlay,.header-homepage:not(.header-slide).color-overlay::before{opacity:0.7;}.header-homepage-arrow{font-size:calc( 50px * 0.84 );bottom:20px;background:rgba(255,255,255,0);}.header-homepage-arrow > i.fa{width:50px;height:50px;}.header-homepage-arrow > i{color:#ffffff;}.mesmerize-front-page .header-separator .svg-white-bg{fill:#ffffff!important;}.mesmerize-front-page .header-separator path.svg-accent{stroke:#FF9800!important;}.mesmerize-front-page .header-separator svg{height:154px!important;}.header-homepage .header-description-row{padding-top:20%;padding-bottom:20%;}.inner-header-description{padding-top:8%;padding-bottom:8%;}.mesmerize-front-page .navigation-bar.bordered{border-bottom-color:rgba(255, 255, 255, 1);border-bottom-width:2px;border-bottom-style:solid;}@media screen and (max-width:767px){.header-homepage .header-description-row{padding-top:15%;padding-bottom:15%;}}@media only screen and (min-width: 768px){.header-content .align-holder{width:80%!important;}.inner-header-description{text-align:center!important;}}
+</style>
+<link rel="stylesheet" id="mesmerize-style-bundle-css" href="./niveaux_files/theme.bundle.min.css" type="text/css" media="all">
+<link rel="stylesheet" id="mesmerize-fonts-css" data-href="https://fonts.googleapis.com/css?family=Open+Sans%3A300%2C400%2C600%2C700%7CMuli%3A300%2C300italic%2C400%2C400italic%2C600%2C600italic%2C700%2C700italic%2C900%2C900italic%7CPlayfair+Display%3A400%2C400italic%2C700%2C700italic&amp;subset=latin%2Clatin-ext" type="text/css" media="all" href="./niveaux_files/css">
+<script type="text/javascript" src="./niveaux_files/jquery.js.téléchargement"></script>
+<script type="text/javascript">
+    
+        (function () {
+            function setHeaderTopSpacing() {
+
+                setTimeout(function() {
+                  var headerTop = document.querySelector('.header-top');
+                  var headers = document.querySelectorAll('.header-wrapper .header,.header-wrapper .header-homepage');
+
+                  for (var i = 0; i < headers.length; i++) {
+                      var item = headers[i];
+                      item.style.paddingTop = headerTop.getBoundingClientRect().height + "px";
+                  }
+
+                    var languageSwitcher = document.querySelector('.mesmerize-language-switcher');
+
+                    if(languageSwitcher){
+                        languageSwitcher.style.top = "calc( " +  headerTop.getBoundingClientRect().height + "px + 1rem)" ;
+                    }
+                    
+                }, 100);
+
+             
+            }
+
+            window.addEventListener('resize', setHeaderTopSpacing);
+            window.mesmerizeSetHeaderTopSpacing = setHeaderTopSpacing
+            mesmerizeDomReady(setHeaderTopSpacing);
+        })();
+    
+    
+</script>
+<script type="text/javascript" src="./niveaux_files/jquery-migrate.min.js.téléchargement"></script>
+<link rel="https://api.w.org/" href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/wp-json/">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/wp-includes/wlwmanifest.xml"> 
+<link rel="prev" title="Technique d’animation « traditionnelle », le dessin animée" href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/2019/04/11/technique-danimation-traditionnelle-le-dessin-animee/">
+<link rel="next" title="[Phaser 3] faire tirer un personnage" href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/2019/04/12/phaser-3-faire-tirer-un-personnage/">
+<meta name="generator" content="WordPress 5.1">
+<link rel="canonical" href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/2019/04/12/ajouter-plusieurs-niveaux-a-un-jeu/">
+<link rel="shortlink" href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/?p=77">
+<link rel="alternate" type="application/json+oembed" href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fweb-mmi.iutbeziers.fr%2F24hMMI%2Fwordpress%2Findex.php%2F2019%2F04%2F12%2Fajouter-plusieurs-niveaux-a-un-jeu%2F">
+<link rel="alternate" type="text/xml+oembed" href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fweb-mmi.iutbeziers.fr%2F24hMMI%2Fwordpress%2Findex.php%2F2019%2F04%2F12%2Fajouter-plusieurs-niveaux-a-un-jeu%2F&amp;format=xml">
+        <style data-name="header-gradient-overlay">
+            .header .background-overlay {
+                background: linear-gradient(135deg , rgba(102,126,234, 0.8) 0%, rgba(118,75,162,0.8) 100%);
+            }
+        </style>
+        <script type="text/javascript" data-name="async-styles">
+        (function () {
+            var links = document.querySelectorAll('link[data-href]');
+            for (var i = 0; i < links.length; i++) {
+                var item = links[i];
+                item.href = item.getAttribute('data-href')
+            }
+        })();
+    </script>
+    <link rel="pingback" href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/xmlrpc.php">
+		<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+		<link rel="icon" href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/wp-content/uploads/2019/04/cropped-visuel-24hMMI-32x32.png" sizes="32x32">
+<link rel="icon" href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/wp-content/uploads/2019/04/cropped-visuel-24hMMI-192x192.png" sizes="192x192">
+<link rel="apple-touch-icon-precomposed" href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/wp-content/uploads/2019/04/cropped-visuel-24hMMI-180x180.png">
+<meta name="msapplication-TileImage" content="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/wp-content/uploads/2019/04/cropped-visuel-24hMMI-270x270.png">
+    <style id="page-content-custom-styles">
+            </style>
+        <style data-name="background-content-colors">
+        .mesmerize-inner-page .page-content,
+        .mesmerize-inner-page .content,
+        .mesmerize-front-page.mesmerize-content-padding .page-content {
+            background-color: #ffffff;
+        }
+    </style>
+    </head>
+
+<body class="post-template-default single single-post postid-77 single-format-standard mesmerize-inner-page">
+
+<div id="page-top" class="header-top">
+	        <div class="header-top-bar ">
+            <div class="">
+                <div class="header-top-bar-inner row middle-xs start-xs ">
+                        <div class="header-top-bar-area  col-xs area-left">
+            </div>
+                            <div class="header-top-bar-area  col-xs-fit area-right">
+            <div data-type="group" data-dynamic-mod="true" class="top-bar-social-icons">
+                      <a target="_blank" class="social-icon" href="https://twitter.com/Mmi24h">
+                  <i class="fa fa-twitter-square"></i>
+              </a>
+              
+    </div>
+
+        </div>
+                    </div>
+            </div>
+        </div>
+        	<div style="visibility: hidden; display: block; width: 1261px; height: 81px; margin: 0px; float: none; position: relative; top: 0px; right: 0px; bottom: 0px; left: 0px;"></div><div class="navigation-bar coloured-nav fixto-fixed" data-sticky="0" data-sticky-mobile="1" data-sticky-to="top" style="z-index: 10000; left: 0px; width: 1261px; position: fixed; top: 0px;">
+    <div class="navigation-wrapper ">
+    	<div class="row basis-auto">
+	        <div class="logo_col col-xs col-sm-fit">
+	            <a class="text-logo" data-type="group" data-dynamic-mod="true" href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/">24h<span style="font-weight: 300;" class="span12"> MMI</span></a>	        </div>
+	        <div class="main_menu_col col-xs">
+	            <div id="mainmenu_container" class="row"><ul id="main_menu" class="active-line-bottom main-menu dropdown-menu"><li id="menu-item-117" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-117"><a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress">Accueil</a></li>
+<li id="menu-item-62" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-62"><a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/category/ressourcers/tutoriels/">Tutoriels</a></li>
+<li id="menu-item-118" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor menu-item-118"><a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/category/ressourcers/">Ressources</a></li>
+<li id="menu-item-119" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-119"><a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/category/animation/">Animation</a></li>
+<li id="menu-item-120" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-120"><a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/category/infographie/">Infographie</a></li>
+<li id="menu-item-227" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-227"><a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/category/game-design/">Game Design</a></li>
+</ul></div>    <a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/2019/04/12/ajouter-plusieurs-niveaux-a-un-jeu/#" data-component="offcanvas" data-target="#offcanvas-wrapper" data-direction="right" data-width="300px" data-push="false" data-loaded="true">
+        <div class="bubble"></div>
+        <i class="fa fa-bars"></i>
+    </a>
+    
+    	        </div>
+	    </div>
+    </div>
+</div>
+</div>
+
+<div id="page" class="site">
+    <div class="header-wrapper">
+        <div class="header  color-overlay  custom-mobile-image" style="background-image: url(&quot;https://web-mmi.iutbeziers.fr/24hMMI/wordpress/wp-content/uploads/2019/04/plusieurs_niveaux_partie3.png&quot;); background-color: rgb(106, 115, 218); padding-top: 121.188px;" data-parallax-depth="20">
+            <div class="background-overlay"></div>								    <div class="inner-header-description gridContainer">
+        <div class="row header-description-row">
+    <div class="col-xs col-xs-12">
+        <h1 class="hero-title">
+            [Phaser 3] Ajouter plusieurs niveaux à un jeu        </h1>
+                    <p class="header-subtitle">24h pour découvrir le département MMI</p>
+            </div>
+        </div>
+    </div>
+        <script>
+        window.mesmerizeSetHeaderTopSpacing();
+    </script>
+                        </div>
+    </div>
+    <div class="content post-page">
+        <div class="gridContainer">
+            <div class="row">
+                <div class="col-xs-12 col-sm-8 col-md-9">
+          					<div class="post-item post-item-single">
+          						<div id="post-77" class="post-77 post type-post status-publish format-standard has-post-thumbnail hentry category-phaser-3 category-tutoriels tag-niveaux-multiples tag-tutoriel">
+    <div class="post-content-single">
+        <h2>[Phaser 3] Ajouter plusieurs niveaux à un jeu</h2>
+        <div class="row post-meta small">
+    <div class="col-md-10 col-xs-9">
+        <ul class="is-bar">
+            <li>par <a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/author/24hmmi/" title="Articles par 24hMMI" rel="author">24hMMI</a></li>
+            <li>dans <a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/category/ressourcers/tutoriels/phaser-3/" rel="category tag">Phaser 3</a>, <a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/category/ressourcers/tutoriels/" rel="category tag">Tutoriels</a></li>
+            <li>sur 12 avril 2019</li>
+        </ul>
+    </div>
+    <div class="col-md-2 col-xs-3 text-right">
+        <i class="font-icon-post fa fa-comment-o"></i><span>0</span>
+    </div>
+</div>
+        <div class="post-content-inner">
+            <img width="800" height="600" src="./niveaux_files/plusieurs_niveaux_partie3.png" class="space-bottom-small space-bottom-xs wp-post-image" alt="" srcset="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/wp-content/uploads/2019/04/plusieurs_niveaux_partie3.png 800w, https://web-mmi.iutbeziers.fr/24hMMI/wordpress/wp-content/uploads/2019/04/plusieurs_niveaux_partie3-300x225.png 300w, https://web-mmi.iutbeziers.fr/24hMMI/wordpress/wp-content/uploads/2019/04/plusieurs_niveaux_partie3-768x576.png 768w" sizes="(max-width: 800px) 100vw, 800px">
+<p class="has-drop-cap">Dans ce tutoriel, nous montrons comment ajouter plusieurs niveaux (pouvant être complètement différents) à un jeu développé en Phaser 3 en utilisant le concept de scène.</p>
+
+
+
+<hr class="wp-block-separator is-style-wide">
+
+
+
+<p>Retrouvez le code HTML de départ, les images utilisées (répertoire Asssets),  et le code HTML des différentes étapes en téléchargeant l’archive zip associée à ce tutoriel :</p>
+
+
+
+<div class="wp-block-file aligncenter"><a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/wp-content/uploads/2019/04/Tutorial_phaser3_plusieurs_niveaux.zip">Tutorial_phaser3_plusieurs_niveaux</a><a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/wp-content/uploads/2019/04/Tutorial_phaser3_plusieurs_niveaux.zip" class="wp-block-file__button" download="">Télécharger</a></div>
+
+
+
+<hr class="wp-block-separator is-style-wide">
+
+
+
+<h3>Jeu de départ</h3>
+
+
+
+<div class="wp-block-media-text alignwide has-media-on-the-right"><figure class="wp-block-media-text__media"><img src="./niveaux_files/plusieurs_niveaux_partie1.png" alt="" class="wp-image-79" srcset="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/wp-content/uploads/2019/04/plusieurs_niveaux_partie1.png 800w, https://web-mmi.iutbeziers.fr/24hMMI/wordpress/wp-content/uploads/2019/04/plusieurs_niveaux_partie1-300x225.png 300w, https://web-mmi.iutbeziers.fr/24hMMI/wordpress/wp-content/uploads/2019/04/plusieurs_niveaux_partie1-768x576.png 768w" sizes="(max-width: 800px) 100vw, 800px"></figure><div class="wp-block-media-text__content">
+<p>Nous partons d’une base constituée d’un jeu de plateforme dans lequel&nbsp;un personnage est présent sur un monde présentant quelques plateaux. Il peut aller à gauche, à droite, et sauter avec la flèche du haut (voir&nbsp;Figure&nbsp;ci-contre). Cette base s’obtient facilement à partir du tutoriel de présentation de Phaser . <br></p>
+
+
+
+<p>code associé : <strong>plusieurs_niveaux_partie1.html </strong></p>
+</div></div>
+
+
+
+<div style="height:20px" aria-hidden="true" class="wp-block-spacer"></div>
+
+
+
+<hr class="wp-block-separator is-style-wide">
+
+
+
+<h3>Comprendre le concept de scènes</h3>
+
+
+
+<p>Sur Phaser 3, on travaille avec des scènes. Globalement, un écran d’accueil, un niveau, une transition d’un mode à un autre, est défini par une&nbsp;<em>scène</em>.&nbsp;&nbsp;Une scène contient trois fonctions principales, comme déjà vu&nbsp;:</p>
+
+
+
+<ul><li>La fonction&nbsp;<strong>preload</strong>()&nbsp;: charge des éléments (notamment des images) pour tout le jeu</li><li>La fonction&nbsp;<strong>create</strong>()&nbsp;: exécute des instructions lorsque la scène est lancée</li><li>La fonction&nbsp;<strong>update</strong>()&nbsp;: surveille les mises à jour, et événements de la scène</li></ul>
+
+
+
+<p>Dans les tutoriels simples, il n’y a qu’une scène, le code est simplifié. Mais si on veut mettre en place plusieurs scènes, il va falloir créer autant de fonctions preload, create et update que l’on a de scènes.&nbsp; Pour charger plusieurs scènes dans Phaser 3, on va devoir modifier le code de manière conséquente en passant par une syntaxe «&nbsp;orientée objet&nbsp;».</p>
+
+
+
+<p>L‘utilisation des scènes est très simplifiée ici, mais elle&nbsp;&nbsp;a l’avantage de marcher si les scènes sont très différentes, et est utilisée ici&nbsp;à des fins pédagogiques. Si on avait des niveaux très similaires, il serait possible de grouper toutes les scènes «&nbsp;au fonctionnement identique&nbsp;» en une seule, en faisant en sorte que les éléments différents soient mis à jour à chaque chargement de scène.</p>
+
+
+
+<hr class="wp-block-separator is-style-wide">
+
+
+
+<h3>Changer la syntaxe de chargement de la scène&nbsp;</h3>
+
+
+
+<p>Dans un premier temps, nous allons passer à une syntaxe orientée objets, en utilisant une classe. Avant, on avait quelque chose comme ça (les trois points signifient du code qu’on n’a pas copié pour des raisons de place)&nbsp;:</p>
+
+
+
+<pre class="wp-block-code"><code>   var config = {
+       ...
+        scene: {
+            preload: preload,
+            create: create,
+            update: update
+        }
+} ;
+
+  var game = new Phaser.Game(config);
+
+    function preload () { ... }
+    function create ()  { ... }
+    function update ()  { ... }
+</code></pre>
+
+
+
+<p>Il était sous-entendu qu’on avait qu’une seule scène, dont le nom n’est pas mentionné.&nbsp;&nbsp;Pour passer à la syntaxe objet, il va nous falloir donner un nom à cette scène, par exemple «&nbsp;<em>selectWorld</em>», et modifier le code pour avoir quelque chose comme ceci&nbsp;:&nbsp;</p>
+
+
+
+<pre class="wp-block-code"><code>    window.onload = function() {
+        var config = {
+            ...
+            scene: [selectWorld]
+        };  
+        game= new Phaser.Game(config);
+        game.scene.start("selectWorld");
+    }
+    
+ class selectWorld extends Phaser.Scene{
+
+    constructor(){
+         super({key: 'selectWorld' });
+    }
+    preload () { ...}
+    create () { ...}
+    update () { ...}
+}</code></pre>
+
+
+
+<p>Qu’avons-nous fait&nbsp;? nous avons regroupé les fonctions&nbsp;preload(),&nbsp;create()et&nbsp;update()&nbsp;au sein d’une classe du nom de la scène, ici avec la syntaxe&nbsp;class selectWorld. Cette classe doit hériter de la classe Phaser.Scene. Pour qu’elle fonctionne correctement,&nbsp;&nbsp;il faut lui définir un constructeur –&nbsp;<em>constructor</em>()-, qui appele le constructeur de la classe mère – avec&nbsp;<em>super</em>()-&nbsp;&nbsp;en lui passant en paramètre le nom de la classe comme clé –&nbsp;<em>key</em>&nbsp;: ‘<em>selectWorld</em>’- . Ceci est un peu technique, mais il suffit de comprendre qu’on a créé une scene nommée <em>selectWorld</em>, qui est associée à 3 méthodes : &nbsp;<em>preload</em>(),&nbsp;<em>create</em>() et&nbsp;<em>update</em>().&nbsp;</p>
+
+
+
+<p>On a du coup modifié légèrement la ligne de chargement de&nbsp;scene dans la variable&nbsp;config en précisant à l’intérieur la liste des scènes disponibles – ici juste&nbsp;[<em>selectWorld</em>]. Quand on a créé le jeu, on a ajouté juste apres le nom de la scène à lancer par défaut, avec la ligne&nbsp;<em>game.scene.start(«&nbsp;selectWorld&nbsp;»);</em></p>
+
+
+
+<div class="wp-block-media-text alignwide has-media-on-the-right"><figure class="wp-block-media-text__media"><img src="./niveaux_files/plusieurs_niveaux_partie2.png" alt="" class="wp-image-89" srcset="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/wp-content/uploads/2019/04/plusieurs_niveaux_partie2.png 800w, https://web-mmi.iutbeziers.fr/24hMMI/wordpress/wp-content/uploads/2019/04/plusieurs_niveaux_partie2-300x225.png 300w, https://web-mmi.iutbeziers.fr/24hMMI/wordpress/wp-content/uploads/2019/04/plusieurs_niveaux_partie2-768x576.png 768w" sizes="(max-width: 800px) 100vw, 800px"></figure><div class="wp-block-media-text__content">
+<p>Testons ce code : tout fonctionne. Afin d’éviter toute erreur de syntaxe, notez bien que :</p>
+
+
+
+<ul><li>la ligne <em>scene</em> de <em>config</em> a été remplacée, pas ajoutée </li><li>la fonction <em>window.onload</em> n’englobe pas tout, seulement les lignes de <em>config</em> et <em>new Phase(game)</em></li><li>On a supprimé les mots clé ‘<em>function</em>‘ devant <em>preload</em>, <em>create</em> et <em>update</em>.</li></ul>
+
+
+
+<p>code associé : <strong>plusieurs_niveaux_partie2.html </strong></p>
+</div></div>
+
+
+
+<div style="height:20px" aria-hidden="true" class="wp-block-spacer"></div>
+
+
+
+<hr class="wp-block-separator is-style-wide">
+
+
+
+<h3>Ajout de portes vers 3 sous-niveaux</h3>
+
+
+
+<p>Nous allons ajouter trois nouvelles scènes, très similaires, nommées&nbsp;niveau1,&nbsp;niveau2 et&nbsp;niveau3, qui seront accessibles via 3 portes de couleurs différentes, et définies dans les images <em>door1.png</em>, <em>door2.png</em> et <em>door3.png</em>. Nous commençons par ajouter les portes dans la scène selectWorld de la façon suivante :</p>
+
+
+
+<p>Hors de toute fonction, on va ajouter 3 variables door1, door2 et door3 :</p>
+
+
+
+<pre class="wp-block-code"><code>var door1;
+var door2;
+var door3;</code></pre>
+
+
+
+<p>Dans la méthode&nbsp;<em>preload</em>() de <em>selectWorld</em> on charge les images en ajoutant&nbsp;:</p>
+
+
+
+<pre class="wp-block-code"><code>      this.load.image('door1', 'assets/door1.png');
+      this.load.image('door2', 'assets/door2.png');
+      this.load.image('door3', 'assets/door3.png');</code></pre>
+
+
+
+<p>Dans la méthode&nbsp;<em>create</em>() de <em>selectWorld</em> on place les portes en ajoutant&nbsp;:</p>
+
+
+
+<pre class="wp-block-code"><code>       door1 = this.add.sprite(600, 364,'door1'); 
+       door2 = this.add.sprite(50, 214,'door2'); 
+       door3 = this.add.sprite(750, 184,'door3');</code></pre>
+
+
+
+<div class="wp-block-media-text alignwide has-media-on-the-right"><figure class="wp-block-media-text__media"><img src="./niveaux_files/plusieurs_niveaux_partie3.png" alt="" class="wp-image-99" srcset="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/wp-content/uploads/2019/04/plusieurs_niveaux_partie3.png 800w, https://web-mmi.iutbeziers.fr/24hMMI/wordpress/wp-content/uploads/2019/04/plusieurs_niveaux_partie3-300x225.png 300w, https://web-mmi.iutbeziers.fr/24hMMI/wordpress/wp-content/uploads/2019/04/plusieurs_niveaux_partie3-768x576.png 768w" sizes="(max-width: 800px) 100vw, 800px"></figure><div class="wp-block-media-text__content">
+<p>Visuellement, nous avons le résultat suivant. les portes sont placées. Les prochaines étapes consistent à définir les 3 niveaux, puis à lier les portes aux niveaux.</p>
+
+
+
+<p>code associé : <strong>plusieurs_niveaux_partie3.html </strong></p>
+</div></div>
+
+
+
+<div style="height:20px" aria-hidden="true" class="wp-block-spacer"></div>
+
+
+
+<hr class="wp-block-separator is-style-wide">
+
+
+
+<h3>Création des 3 sous-niveaux</h3>
+
+
+
+<p>Nous allons ajouter trois nouvelles scènes, très similaires, nommées&nbsp;niveau 1,&nbsp;niveau 2 et&nbsp;niveau3. Chaque niveau est une scène possédant ses propres fonctions <em>preload</em>, <em>create</em>, et <em>upload</em>. Il suffit de définir pour chaque scène une syntaxe similaire, en englobant nos trois fonctions dans une classe.&nbsp;&nbsp;Nous présentons le code ajouté pour 1 niveau, les 2 autres étant globalement du copier coller (en changeant door1 par door2 et door3) &nbsp;:</p>
+
+
+
+<pre class="wp-block-code"><code>class niveau1 extends Phaser.Scene{
+    constructor(){
+         super({
+            key: 'niveau1'
+        });
+    }
+    preload () {
+            this.load.image('sky', 'assets/sky.png');
+            this.load.image('ground', 'assets/platform.png');
+            this.load.image('door1', 'assets/door1.png');
+            this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
+    }
+     create () {
+            this.add.image(400, 300, 'sky');
+            platforms = this.physics.add.staticGroup();
+            platforms.create(400, 568, 'ground').setScale(2).refreshBody();
+
+            door1 = this.add.sprite(600, 516,'door1');
+            player = this.physics.add.sprite(600, 516, 'dude');
+            player.setBounce(0.2);
+            player.setCollideWorldBounds(true);
+
+           cursors = this.input.keyboard.createCursorKeys();
+           this.physics.add.collider(player, platforms);
+    }
+
+   update () {
+       console.log("niveau1");
+        if (cursors.left.isDown)  {
+            player.setVelocityX(-160);
+            player.anims.play('left', true);
+        }
+        else if (cursors.right.isDown) {
+            player.setVelocityX(160);
+            player.anims.play('right', true);
+        }
+        else  {
+            player.setVelocityX(0);
+            player.anims.play('turn');
+        }
+
+        if (cursors.up.isDown &amp;&amp; player.body.touching.down)  {
+            player.setVelocityY(-330);
+        }
+    }
+}
+</code></pre>
+
+
+
+<p>On fait la même chose avec&nbsp;<em>niveau 2</em> et&nbsp;<em>niveau 3</em>. Il nous faut alors modifier le chargement de la configuration pour inclure ces 3 niveaux. Dans la variable&nbsp;<em>config</em>, onva remplacer la ligne <em>scene: [selectWorld]</em> par la ligne suivante : </p>
+
+
+
+<pre class="wp-block-code"><code>    scene: [selectWorld, niveau1, niveau2, niveau3]</code></pre>
+
+
+
+<p>On teste le jeu, rien n’a changé. Normal. Il reste à assurer les passages entre les différents niveaux. Pour cela, on va placer des portes reliant&nbsp;<em>selectWorld</em> à chacun des niveaux</p>
+
+
+
+<p>code associé : <strong>deux_joueurs_partie4.html </strong></p>
+
+
+
+<hr class="wp-block-separator is-style-wide">
+
+
+
+<h3>Mise en place du mécanisme d’ouverture de porte<br></h3>
+
+
+
+<p>Nous ajoutons le mécanisme de porte suivant&nbsp;&nbsp;: lorsque le joueur est sur une porte, il peut l’ouvrir en appuyant sur la touche&nbsp;espace, pas en laissant enfoncé, mais juste en appuyant dessus – D’un point de vue du développeur, on va surveiller quand le joueur appuie sur la touche espace, on va regarder s’il est dans la zone de la porte. Il y a une difficulté cachée dans le sens que les portes ne sont pas des objets sujets à la physique, mais de simples images posées à des coordonnées données. De ce fait on ne pourra pas utiliser directement la méthode&nbsp;<em>add.overlap</em> comme on le faisait avant pour des entités physiques. Mais pas de problème, on a une solution.&nbsp;&nbsp;Hors de toute classe, on ajoute la fonction&nbsp;<em>checkOverlap</em>() qui renvoie vrai si 2 objets&nbsp;<em>spriteA</em> et&nbsp;<em>spriteB</em> passés en paramètre se superposent :</p>
+
+
+
+<pre class="wp-block-code"><code>function checkOverlap(spriteA, spriteB) {
+   var boundsA = spriteA.getBounds();
+    var boundsB = spriteB.getBounds();
+    var result = Phaser.Geom.Rectangle.Intersection(boundsA, boundsB);
+    return (result.width !=0 || result.height!=0 )
+}</code></pre>
+
+
+
+<p>Dans la méthode&nbsp;<em>update()</em> de&nbsp;<em>selectWorld</em>, on ajoute le mécanisme de surveillance de la touche espace. Si le joueur est sur une porte, on va lancer a scène correspondante&nbsp;:</p>
+
+
+
+<pre class="wp-block-code"><code>        if (Phaser.Input.Keyboard.JustDown(cursors.space)) {
+            if (checkOverlap(player, door1)) {
+              this.scene.start("niveau1");
+            } 
+            if (checkOverlap(player, door2)) {
+                this.scene.start("niveau2");
+            } 
+            if (checkOverlap(player, door3)) {
+                this.scene.start("niveau3");
+            }
+        }</code></pre>
+
+
+
+<p>Au sein de chaque niveau, on peut adopter un mécanisme similaire&nbsp;: lorsque le joueur est dessus et appuie sur espace, on recharge le niveau de départ. Par exemple, pour le niveau 1, on écrira :</p>
+
+
+
+<pre class="wp-block-code"><code>        if (Phaser.Input.Keyboard.JustDown(cursors.space) &amp;&amp; checkOverlap(player, door1)) {
+              this.scene.start("selectWorld");
+        }</code></pre>
+
+
+
+<p>Pour les autres niveaux, on remplacera simplement door1 par door2, ou door3.</p>
+
+
+
+<div class="wp-block-media-text alignwide has-media-on-the-right"><figure class="wp-block-media-text__media"><img src="./niveaux_files/plusieurs_niveaux_partie5.png" alt="" class="wp-image-185" srcset="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/wp-content/uploads/2019/04/plusieurs_niveaux_partie5.png 800w, https://web-mmi.iutbeziers.fr/24hMMI/wordpress/wp-content/uploads/2019/04/plusieurs_niveaux_partie5-300x225.png 300w, https://web-mmi.iutbeziers.fr/24hMMI/wordpress/wp-content/uploads/2019/04/plusieurs_niveaux_partie5-768x576.png 768w" sizes="(max-width: 800px) 100vw, 800px"></figure><div class="wp-block-media-text__content">
+<p>Il ne reste plus qu’a tester notre code et à admirer le résultat : quand on franchit une porte, en appuyant sur espace, on se retrouve dans un niveau. Chaque niveau se distingue par la couleur de la porte associée.</p>
+
+
+
+<p>code associé : <strong>plusieurs_niveaux_partie5.html </strong></p>
+</div></div>
+
+
+
+<div style="height:20px" aria-hidden="true" class="wp-block-spacer"></div>
+
+
+
+<hr class="wp-block-separator is-style-wide">
+
+
+
+<h3>Pour aller plus loin …</h3>
+
+
+
+<p>Pour que le jeu soit plus agréable, il sera interessant de rajouter des mécanismes complémentaires. Par exemple si on revient sur le monde de départ, peut-être sera-t’il intéressant de sauvegarder dans une variable globale la porte qui a été franchie, pour positionner le personnage devant cette porte et non sur le point de départ de la scène.&nbsp;</p>
+
+
+
+<hr class="wp-block-separator is-style-wide">
+
+
+
+<p>Retrouvez le code HTML de départ, les images utilisées (répertoire Asssets),  et le code HTML des différentes étapes en téléchargeant l’archive zip associée à ce tutoriel  :<a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/wp-content/uploads/2019/04/Tutorial_phaser3_deux_joueurs.zip">T</a></p>
+
+
+
+<div class="wp-block-file aligncenter"><a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/wp-content/uploads/2019/04/Tutorial_phaser3_plusieurs_niveaux.zip">Tutorial_phaser3_plusieurs_niveaux</a><a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/wp-content/uploads/2019/04/Tutorial_phaser3_plusieurs_niveaux.zip" class="wp-block-file__button" download="">Télécharger</a></div>
+
+
+
+<hr class="wp-block-separator">
+        </div>
+        <p class="tags-list-child">Tags: <a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/tag/niveaux-multiples/" rel="tag">niveaux multiples</a>, <a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/tag/tutoriel/" rel="tag">tutoriel</a></p>    </div>
+    
+	<nav class="navigation post-navigation" role="navigation">
+		<h2 class="screen-reader-text">Navigation de l’article</h2>
+		<div class="nav-links"><div class="nav-previous"><a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/2019/04/11/technique-danimation-traditionnelle-le-dessin-animee/" rel="prev"><span class="meta-nav" aria-hidden="true">Précédent :</span> <span class="screen-reader-text">Article précédent :</span> <span class="post-title">Technique d’animation «&nbsp;traditionnelle&nbsp;», le dessin animée</span></a></div><div class="nav-next"><a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/2019/04/12/phaser-3-faire-tirer-un-personnage/" rel="next"><span class="meta-nav" aria-hidden="true">Suivant :</span> <span class="screen-reader-text">Article suivant :</span> <span class="post-title">[Phaser 3] faire tirer un personnage</span></a></div></div>
+	</nav>    
+
+<div class="post-comments">
+	 
+  
+</div>
+<!-- /post-comments -->
+
+  <div class="comments-form">
+    <div class="comment-form">
+     		<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Laisser un commentaire <small><a rel="nofollow" id="cancel-comment-reply-link" href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/2019/04/12/ajouter-plusieurs-niveaux-a-un-jeu/#respond" style="display:none;">Annuler la réponse</a></small></h3>			<form action="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+				<p class="comment-notes"><span id="email-notes">Votre adresse de messagerie ne sera pas publiée.</span> Les champs obligatoires sont indiqués avec <span class="required">*</span></p><p class="comment-form-comment"><label for="comment">Commentaire</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"></textarea></p><p class="comment-form-author"><label for="author">Nom <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" maxlength="245" required="required"></p>
+<p class="comment-form-email"><label for="email">Adresse de messagerie <span class="required">*</span></label> <input id="email" name="email" type="text" value="" size="30" maxlength="100" aria-describedby="email-notes" required="required"></p>
+<p class="comment-form-url"><label for="url">Site web</label> <input id="url" name="url" type="text" value="" size="30" maxlength="200"></p>
+<p class="comment-form-cookies-consent"><input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes"><label for="wp-comment-cookies-consent">Enregistrer mon nom, mon e-mail et mon site web dans le navigateur pour mon prochain commentaire.</label></p>
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="button blue small" value="Laisser un commentaire"> <input type="hidden" name="comment_post_ID" value="77" id="comment_post_ID">
+<input type="hidden" name="comment_parent" id="comment_parent" value="0">
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="e1f03ee972"></p><p style="display: none;"></p>			<input type="hidden" id="ak_js" name="ak_js" value="1580396131663"></form>
+			</div><!-- #respond -->
+	    </div>
+  </div>
+</div>
+                    </div>
+                </div>
+				        
+<div class="sidebar col-sm-4 col-md-3">
+    <div class="panel bg-color-white">
+        <div id="search-2" class="widget widget_search"><form role="search" method="get" class="search-form" action="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/">
+    <label>
+        <span class="screen-reader-text">Recherche pour :</span>
+        <input type="search" class="search-field" placeholder="Recherche…" value="" name="s">
+    </label>
+</form>
+</div>		<div id="recent-posts-2" class="widget widget_recent_entries">		<h5 class="widgettitle">Articles récents</h5>		<ul>
+											<li>
+					<a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/2019/04/13/phaser3-modifier-la-collision-entre-des-objets-en-cours-de-jeu/">[phaser3] modifier la collision entre des objets en cours de jeu</a>
+									</li>
+											<li>
+					<a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/2019/04/13/phaser3-ajouter-du-gros-son-a-son-jeu-ou-juste-des-bruitages/">[phaser3] Ajouter du gros son à son jeu… ou juste des bruitages</a>
+									</li>
+											<li>
+					<a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/2019/04/13/phaser3-creer-un-scrolling-en-3-lignes/">[phaser3] Créer un scrolling en 3 lignes</a>
+									</li>
+											<li>
+					<a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/2019/04/13/phaser-3-creer-son-premier-jeu-phaser-complet-en-partant-de-rien/">[Phaser 3] Créer son premier jeu phaser complet en partant de rien</a>
+									</li>
+											<li>
+					<a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/2019/04/13/amphi-daccueil/">Amphi d’accueil</a>
+									</li>
+					</ul>
+		</div><div id="recent-comments-2" class="widget widget_recent_comments"><h5 class="widgettitle">Commentaires récents</h5><ul id="recentcomments"><li class="recentcomments"><span class="comment-author-link"><a href="https://wordpress.org/" rel="external nofollow" class="url">Un commentateur WordPress</a></span> dans <a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/2019/04/09/bonjour-tout-le-monde/#comment-1">24h MMI</a></li></ul></div><div id="archives-2" class="widget widget_archive"><h5 class="widgettitle">Archives</h5>		<ul>
+				<li><a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/2019/04/">avril 2019</a></li>
+		</ul>
+			</div><div id="categories-2" class="widget widget_categories"><h5 class="widgettitle">Catégories</h5>		<ul>
+				<li class="cat-item cat-item-30"><a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/category/animation/">Animation</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/category/ressourcers/assets/assets-graphqiues/">Assets Graphiques</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/category/ressourcers/assets/assets-sonores/">Assets Sonores</a>
+</li>
+	<li class="cat-item cat-item-39"><a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/category/game-design/">Game Design</a>
+</li>
+	<li class="cat-item cat-item-21"><a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/category/ressourcers/logiciels/">Logiciels</a>
+</li>
+	<li class="cat-item cat-item-1"><a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/category/non-classe/">Non classé</a>
+</li>
+	<li class="cat-item cat-item-42"><a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/category/ressourcers/tutoriels/phaser-3/">Phaser 3</a>
+</li>
+	<li class="cat-item cat-item-3"><a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/category/ressourcers/">Ressources</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/category/ressourcers/tutoriels/">Tutoriels</a>
+</li>
+		</ul>
+			</div><div id="meta-2" class="widget widget_meta"><h5 class="widgettitle">Méta</h5>			<ul>
+						<li><a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/wp-login.php">Connexion</a></li>
+			<li><a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/feed/">Flux <abbr title="Really Simple Syndication">RSS</abbr> des articles</a></li>
+			<li><a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/comments/feed/"><abbr title="Really Simple Syndication">RSS</abbr> des commentaires</a></li>
+			<li><a href="https://wpfr.net/" title="Propulsé par WordPress, plate-forme de publication personnelle sémantique de pointe.">Site de WordPress-FR</a></li>			</ul>
+			</div>    </div>
+</div>
+            </div>
+        </div>
+    </div>
+	<div class="footer footer-simple">
+    <div class="footer-content center-xs">
+        <div class="gridContainer">
+	        <div class="row middle-xs footer-content-row">
+	            <div class="footer-content-col col-xs-12">
+	                    <p class="copyright">©&nbsp;&nbsp;2020&nbsp;24h MMI.&nbsp;Construit avec WordPress et le thème <a target="_blank" href="https://extendthemes.com/go/built-with-highlight/" class="mesmerize-theme-link">Highlight Theme</a></p>	            </div>
+	        </div>
+	    </div>
+    </div>
+</div>
+	</div>
+<script type="text/javascript" defer="defer" src="./niveaux_files/imagesloaded.min.js.téléchargement"></script>
+<script type="text/javascript" defer="defer" src="./niveaux_files/masonry.min.js.téléchargement"></script>
+<script type="text/javascript" defer="defer" src="./niveaux_files/theme.bundle.min.js.téléchargement"></script>
+<script type="text/javascript" src="./niveaux_files/comment-reply.min.js.téléchargement"></script>
+<script type="text/javascript" src="./niveaux_files/theme-child.js.téléchargement"></script>
+<script type="text/javascript" defer="defer" src="./niveaux_files/wp-embed.min.js.téléchargement"></script>
+<script async="async" type="text/javascript" src="./niveaux_files/form.js.téléchargement"></script>
+
+
+<div id="offcanvas-wrapper" class="hide  offcanvas-right offcanvas">
+        <div class="offcanvas-top">
+            <div class="logo-holder">
+                <a class="text-logo" data-type="group" data-dynamic-mod="true" href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/">24h<span style="font-weight: 300;" class="span12"> MMI</span></a>            </div>
+        </div>
+        <div id="offcanvas-menu" class="menu-menu-principal-container"><ul id="offcanvas_menu" class="offcanvas_menu"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-117"><a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress">Accueil</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-62"><a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/category/ressourcers/tutoriels/">Tutoriels</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor menu-item-118"><a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/category/ressourcers/">Ressources</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-119"><a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/category/animation/">Animation</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-120"><a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/category/infographie/">Infographie</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-227"><a href="https://web-mmi.iutbeziers.fr/24hMMI/wordpress/index.php/category/game-design/">Game Design</a></li>
+</ul></div>
+            </div></body></html>
