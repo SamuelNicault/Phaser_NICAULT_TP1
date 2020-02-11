@@ -25,6 +25,11 @@ var viej = 3;
 var saut = 2;
 var sauveSaut = 1;
 var attack = 1;
+<<<<<<< Updated upstream
+=======
+var direction = 'right';
+var boutonFeu;
+>>>>>>> Stashed changes
 
 function init(){
 	var platforms;
@@ -38,7 +43,11 @@ function init(){
 	var scoreTextj;
 	var gameOverTextj;
 	var bomb;
+<<<<<<< Updated upstream
 	
+=======
+	var potions
+>>>>>>> Stashed changes
 }
 
 function preload(){
@@ -56,6 +65,10 @@ function preload(){
 	this.load.image('vie_2','assets/vie_2.png');
 	this.load.image('vie_1','assets/vie_1.png');
 	this.load.image('vie_0','assets/vie_0.png');
+<<<<<<< Updated upstream
+=======
+	this.load.image('potions','assets/potion.png');
+>>>>>>> Stashed changes
 
 }
 
@@ -101,7 +114,11 @@ function create(){
 
 
 	//Récupération des curseurs
+<<<<<<< Updated upstream
 	keys = this.input.keyboard.addKeys('A,Z,S,D');
+=======
+	keys = this.input.keyboard.addKeys('A,F,S,D');
+>>>>>>> Stashed changes
 	cursors = this.input.keyboard.createCursorKeys();
 
 
@@ -206,7 +223,26 @@ function create(){
 	this.physics.add.collider(bombs, sol);
 	this.physics.add.collider(bombs, bombs, hitBombs, null, this);
 
+<<<<<<< Updated upstream
 
+=======
+	//Tirer
+
+	boutonFeu = this.input.keyboard.addKey('F');
+
+	//Potion
+
+	potions = this.physics.add.group({
+		key: 'potions',
+		repeat: 0,
+		setXY: {x: 750, y: 450, stepX: 70}
+	});
+
+	this.physics.add.collider(potions, platforms);
+	this.physics.add.collider(potions, sol);
+	this.physics.add.overlap(potions, player, collectPotion, null, this);
+	this.physics.add.overlap(potions, playerj, collectPotionj, null, this);
+>>>>>>> Stashed changes
 }
 
 
@@ -263,7 +299,67 @@ function collectGlandj(playerj, gland){
 	};
 }
 
+<<<<<<< Updated upstream
 
+=======
+//fonction tir
+
+function tirer(player) {
+        var coefDir;
+	    if (player.direction == 'left') { 
+	    	coefDir = -1; 
+	    } 
+
+	    else { 
+	    	coefDir = 1; 
+	    }
+        // on crée la balle a coté du joueur
+        var bullet = groupeBullets.create(player.x + (25 * coefDir), player.y - 4, 'bullet');
+        // parametres physiques de la balle.
+        bullet.setCollideWorldBounds(true);
+        bullet.body.allowGravity =false;
+        bullet.setVelocity(1000 * coefDir, 0); // vitesse en x et en y
+}
+
+//Fonction potion
+
+function collectPotion(player, potion){
+	potion.disableBody(true,true);
+	vie ++;
+	score += 10;
+	scoreText.setText('Score: '+ score);
+	if (potions.countActive(true) === 0){
+		potions.children.iterate(function(child){
+			child.enableBody(true,child.x,0, true, true);
+		});
+		var x = (player.x < 400) ? 
+		Phaser.Math.Between(400,800):
+		Phaser.Math.Between(0,400);
+		var bomb = bombs.create(x, 16, 'bombs');
+		bomb.setBounce(0.8);
+		bomb.setCollideWorldBounds(true);
+		bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+	};
+}
+
+function collectPotionj(playerj, potion){
+	potion.disableBody(true,true);
+	scorej += 10;
+	scoreTextj.setText('Score: '+ scorej);
+	if (potions.countActive(true) === 0){
+		potions.children.iterate(function(child){
+			child.enableBody(true,child.x,0, true, true);
+		});
+		var x = (playerj.x < 400) ? 
+		Phaser.Math.Between(400,800):
+		Phaser.Math.Between(0,400);
+		var bomb = bombs.create(x, 16, 'bombs');
+		bomb.setBounce(1);
+		bomb.setCollideWorldBounds(true);
+		bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+	};
+}
+>>>>>>> Stashed changes
 
 
 function update() {
@@ -272,9 +368,17 @@ function update() {
 	//Perte de vie
 
 	if (vie == 2){
+<<<<<<< Updated upstream
 		vie_3.destroy(true);
 	}
 	else if (vie == 1){
+=======
+		vie_2 = this.add.image(70,35,'vie_2');
+		vie_3.destroy(true);
+	}
+	else if (vie == 1){
+		vie_1 = this.add.image(70,35,'vie_1');
+>>>>>>> Stashed changes
 		vie_2.destroy(true);
 	}
 	else if (vie == 0){
@@ -289,6 +393,18 @@ function update() {
 		scorej = 0;
 		viej = 3;
 	}
+<<<<<<< Updated upstream
+=======
+	if(vie == 3){
+		vie_3 = this.add.image(70,35,'vie_3');
+	}
+
+
+
+
+
+
+>>>>>>> Stashed changes
 
 	if (viej == 2){
 		vie_3j.destroy(true);
@@ -357,11 +473,20 @@ function update() {
 		player.anims.play('left', true);
 		player.setVelocityX(-200);
 		player.setFlipX(true);
+<<<<<<< Updated upstream
+=======
+		player.direction = 'left';
+>>>>>>> Stashed changes
 	}
 	else if (cursors.right.isDown){
 		player.anims.play('left', true);
 		player.setFlipX(false);
 		player.setVelocityX(200);
+<<<<<<< Updated upstream
+=======
+		player.anims.play('right', true);
+		player.direction = 'left';
+>>>>>>> Stashed changes
 
 	}
 
@@ -387,7 +512,13 @@ function update() {
 	}
 
 	
+<<<<<<< Updated upstream
 
+=======
+	if ( Phaser.Input.Keyboard.JustDown(boutonFeu)) {
+		tirer(player, direction);
+	}	
+>>>>>>> Stashed changes
 	
 
 	//Déplacement du Joueur 2
