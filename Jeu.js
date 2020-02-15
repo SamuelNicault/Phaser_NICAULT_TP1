@@ -153,7 +153,7 @@ function create(){
 	//Player 2
 
 
-	playerj = this.physics.add.sprite(25,450,'persoj');
+	playerj = this.physics.add.sprite(600,450,'persoj');
 	playerj.setCollideWorldBounds(true);
 	playerj.setBounce(0.02);
 	playerj.body.setGravityY(200);
@@ -253,7 +253,7 @@ function create(){
 
 	bombs = this.physics.add.group();
 	this.physics.add.collider(bombs, platforms);
-	this.physics.add.collider(player, playerj);
+	this.physics.add.overlap(player, playerj);
 	this.physics.add.collider(player, bombs, hitBomb, null, this);
 	this.physics.add.collider(player, playerj, hitPlayerJ, null, this);
 	this.physics.add.collider(bombs, sol);
@@ -290,7 +290,14 @@ function hitBombs(bomb, bomb){
 }
 
 function hitPlayerJ(player, playerj){
-	vie --;
+	if(vie == 3){
+		vie --;
+	}
+
+	//A ajouter un cooldown
+	if(vie == 2){
+		vie --;
+	}
 }
 
 
@@ -359,19 +366,13 @@ function tirer(player) {
 function collectPotion(player, potion){
 	potion.disableBody(true,true);
 	vie ++;
-	score += 10;
-	scoreText.setText('Score: '+ score);
 	if (potions.countActive(true) === 0){
-		potions.children.iterate(function(child){
-			child.enableBody(true,child.x,0, true, true);
-		});
-		var x = (player.x < 400) ? 
-		Phaser.Math.Between(400,800):
-		Phaser.Math.Between(0,400);
-		var bomb = bombs.create(x, 16, 'bombs');
-		bomb.setBounce(0.8);
-		bomb.setCollideWorldBounds(true);
-		bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+		if(vie<=1){
+			potions.children.iterate(function(child){
+				child.enableBody(true,child.x,550, true, true);
+
+			});
+		}
 	};
 }
 
@@ -381,15 +382,8 @@ function collectPotionj(playerj, potion){
 	scoreTextj.setText('Score: '+ scorej);
 	if (potions.countActive(true) === 0){
 		potions.children.iterate(function(child){
-			child.enableBody(true,child.x,0, true, true);
+			child.enableBody(true,child.x,550, true, true);
 		});
-		var x = (playerj.x < 400) ? 
-		Phaser.Math.Between(400,800):
-		Phaser.Math.Between(0,400);
-		var bomb = bombs.create(x, 16, 'bombs');
-		bomb.setBounce(1);
-		bomb.setCollideWorldBounds(true);
-		bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
 	};
 }
 
@@ -424,7 +418,12 @@ function update() {
 	}
 
 
+	if(vie<=1){
+			potions.children.iterate(function(child){
+				child.enableBody(true,child.x,550, true, true);
 
+			});
+	}
 
 
 
