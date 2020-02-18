@@ -24,7 +24,6 @@ var vie = 3;
 var viej = 3;
 var saut = 2;
 var sauveSaut = 1;
-var attack = 1;
 var direction = 'right';
 var boutonFeu;
 
@@ -53,7 +52,6 @@ function preload(){
 	this.load.spritesheet('perso','assets/Run.png', {frameWidth: 40, frameHeight: 28});
 	this.load.spritesheet('jump','assets/Jump.png', {frameWidth: 39, frameHeight: 28});
 	this.load.spritesheet('idle','assets/Idle.png', {frameWidth: 39, frameHeight: 28});
-	this.load.spritesheet('attack','assets/Attack.png', {frameWidth: 59, frameHeight: 55});
 	this.load.image('bombs','assets/bombs.png');
 	this.load.image('vie_3','assets/vie_3.png');
 	this.load.image('vie_2','assets/vie_2.png');
@@ -118,8 +116,8 @@ function create(){
 
 	this.anims.create({
 		key: 'left',
-		frames: this.anims.generateFrameNumbers('perso', {start: 0, end: 3}),
-		frameRate: 5,
+		frames: this.anims.generateFrameNumbers('perso', {start: 0, end: 7}),
+		frameRate: 15,
 		repeat: -1
 	});
 
@@ -130,12 +128,6 @@ function create(){
 		repeat: -1
 	});
 
-	this.anims.create({
-		key: 'ground',
-		frames: this.anims.generateFrameNumbers('jump', {start: 2, end: 2}),
-		frameRate: 5,
-		repeat: -1
-	});
 
 	this.anims.create({
 		key: 'pause',
@@ -145,11 +137,6 @@ function create(){
 	});
 
 
-	this.anims.create({
-		key: 'attack',
-		frames: this.anims.generateFrameNumbers('attack', {start: 0, end: 2}),
-		frameRate: 5,
-	});
 	//Player 2
 
 
@@ -450,14 +437,44 @@ function update() {
 
 	//Déplacement du Joueur 1
 
-	if(player.body.deltaY() > 0 && player.body.onFloor()){
-		if (!player.body.touching.down){        // while player's in the air
-	        if (player.body.touching.down){     // when player hit the groud
-	            player.setVelocityX(0);
-	            player.anims.play('ground');      // play landing animation
-	        }
-	    }
+
+	if (cursors.space.isDown){
+		this.registry.destroy(); // destroy registry
+		this.events.off();﻿ // disable all active events
+		this.scene.restart();﻿﻿﻿﻿ // restart current scene
 	}
+
+	if (cursors.left.isDown){
+		player.anims.play('left', true);
+		player.setVelocityX(-150);
+		player.setFlipX(true);
+		if(keys.A.isDown){
+			player.anims.play('left', true);
+			player.setFlipX(true);
+			player.setVelocityX(-200);
+		}
+	}
+	else if (cursors.right.isDown){
+		player.anims.play('left', true);
+		player.setFlipX(false);
+		player.setVelocityX(150);
+		if(keys.A.isDown){
+			player.anims.play('left', true);
+			player.setFlipX(false);
+			player.setVelocityX(200);
+		}
+
+	}
+
+
+	
+
+	else{
+        player.anims.play('pause', true);
+		player.setVelocityX(0);
+		
+	}
+
 
 	if ((player.body.touching.down) && (cursors.up.isDown)){
 		saut = 2;
@@ -467,7 +484,7 @@ function update() {
 		saut --;
 		sauveSaut = 0;
 		if (saut==1) {
-			player.setVelocityY(-350);
+			player.setVelocityY(-250);
 			if (player.body.velocity.y < 0) {
 				player.anims.play('jump', true);
 			}
@@ -485,54 +502,6 @@ function update() {
 	}
 
 
-	if (cursors.space.isDown){
-		this.registry.destroy(); // destroy registry
-		this.events.off();﻿ // disable all active events
-		this.scene.restart();﻿﻿﻿﻿ // restart current scene
-	}
-
-	if (cursors.left.isDown){
-		player.anims.play('left', true);
-		player.setVelocityX(-200);
-		player.setFlipX(true);
-		player.direction = 'left';
-	}
-	else if (cursors.right.isDown){
-		player.anims.play('left', true);
-		player.setFlipX(false);
-		player.setVelocityX(200);
-		player.anims.play('right', true);
-		player.direction = 'left';
-
-	}
-
-	else{
-
-		if ((attack > 0) && (keys.A.isDown)){
-			
-			player.anims.play('attack', true);
-			
-		}
-
-        else {
-        	player.anims.play('pause', true);
-			player.setVelocityX(0);
-		}
-	}
-
-
-	
-
-	if (keys.A.isUp){
-		attack = 1;
-	}
-
-	
-	if ( Phaser.Input.Keyboard.JustDown(boutonFeu)) {
-		tirer(player, direction);
-	}	
-	
-
 	//Déplacement du Joueur 2
 
 
@@ -541,17 +510,17 @@ function update() {
     	this.tweens.add({
 	    	targets: playerj,
 	   	 	
-	   	 	x : 50,
+	   	 	x : -100,
 	    	// alpha: { start: 0, to: 1 },
 	    	// alpha: 1,
 	    	// alpha: '+=1',
 	    	ease: 'Linear',       // 'Cubic', 'Elastic', 'Bounce', 'Back'
-	    	duration: 3000,
+	    	duration: 6000,
 	    	repeat: -1,            // -1: infinity
 	    	yoyo: false
 		});
 		playerj.anims.play('leftj', true);
-		playerj.setVelocityX(-200);
+		playerj.setVelocityX(-100);
 		playerj.setFlipX(false);
 	}
 	
@@ -559,18 +528,18 @@ function update() {
 		this.tweens.add({
 	    	targets: playerj,
 	   	 	
-	   	 	x : 750,
+	   	 	x : 1100,
 	    	// alpha: { start: 0, to: 1 },
 	    	// alpha: 1,
 	    	// alpha: '+=1',
 	    	ease: 'Linear',       // 'Cubic', 'Elastic', 'Bounce', 'Back'
-	    	duration: 3000,
+	    	duration: 6000,
 	    	repeat: 0,            // -1: infinity
 	    	yoyo: false
 		});
 		playerj.anims.play('leftj', true);
 		playerj.setFlipX(true);
-		playerj.setVelocityX(200);
+		playerj.setVelocityX(100);
 
 	}
 
