@@ -124,7 +124,7 @@ function create(){
     });
 
     this.physics.add.collider(cibles, platforms);
-    this.physics.add.collider(groupeBullets, platforms);
+    this.physics.add.collider(groupeBullets, platforms, destroy, null,this);
     this.physics.add.overlap(groupeBullets, cibles, hit, null,this);
 
 	//Récupération des curseurs
@@ -296,6 +296,10 @@ function create(){
 function hitBomb(player, bomb){
 	vie --;
 	bomb.destroy(true);
+}
+
+function destroy(bullet, platforms){
+	bullet.destroy(true);
 }
 
 function hitBombs(bomb, bomb){
@@ -638,7 +642,6 @@ function tirer(player) {
         // on crée la balle a coté du joueur
         var bullet = groupeBullets.create(player.x + (25 * coefDir), player.y - 4, 'bullet');
         // parametres physiques de la balle.
-        bullet.setCollideWorldBounds(true);
         bullet.body.allowGravity =false;
         bullet.setVelocity(1000 * coefDir, 0); // vitesse en x et en y
 }
@@ -651,9 +654,3 @@ function hit (bullet, cible) {
    bullet.destroy();
 }
 
-
-/*function destroy (bullet) {
-	if(bullet.x >= 999){
-	    bullet.destroy();
-	}
-}*/
