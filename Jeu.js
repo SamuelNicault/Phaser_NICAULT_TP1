@@ -24,7 +24,8 @@ var vie = 3;
 var viej = 3;
 var saut = 2;
 var sauveSaut = 1;
-var direction = 'right';
+var sprite;
+var groupeBullets;
 var boutonFeu;
 
 function init(){
@@ -59,6 +60,7 @@ function preload(){
 	this.load.image('vie_0','assets/vie_0.png');
 	this.load.image('potions','assets/potion.png');
 	this.load.spritesheet('tard','assets/Tard.png', {frameWidth: 24, frameHeight: 22});
+	this.load.image('bullet', 'assets/bullet.png');
 
 }
 
@@ -100,22 +102,48 @@ function create(){
 	//Player 1
 
 	player = this.physics.add.sprite(100,450,'perso');
-	player.setCollideWorldBounds(true);
+	player.direction = 'right';
 	player.setBounce(0.02);
+	player.setCollideWorldBounds(true);
 	player.body.setGravityY(200);
 	this.physics.add.collider(player,platforms);
 	this.physics.add.collider(player,sol);
 
+	groupeBullets = this.physics.add.group();
+        
+    cibles = this.physics.add.group({
+        key: 'cible',
+        repeat: 7,
+        setXY: { x: 12, y: 0, stepX: 110 }
+    });
+    
+    cibles.children.iterate(function (cible) {
+        cible.pointsVie=Phaser.Math.Between(1, 5);
+        cible.y = Phaser.Math.Between(10,250);
+        cible.setBounce(1);
+    });
+
+    this.physics.add.collider(cibles, platforms);
+    this.physics.add.collider(groupeBullets, platforms);
+    this.physics.add.overlap(groupeBullets, cibles, hit, null,this);
 
 	//Récupération des curseurs
-	keys = this.input.keyboard.addKeys('A,F,S,D');
+	keys = this.input.keyboard.addKeys('A,S,D');
 	cursors = this.input.keyboard.createCursorKeys();
+	boutonFeu = this.input.keyboard.addKey('F');
 
 
 	//Animations Joueur 1
 
 	this.anims.create({
 		key: 'left',
+		frames: this.anims.generateFrameNumbers('perso', {start: 0, end: 7}),
+		frameRate: 15,
+		repeat: -1
+	});
+
+	this.anims.create({
+		key: 'right',
 		frames: this.anims.generateFrameNumbers('perso', {start: 0, end: 7}),
 		frameRate: 15,
 		repeat: -1
@@ -246,9 +274,6 @@ function create(){
 	this.physics.add.collider(bombs, sol);
 	this.physics.add.collider(bombs, bombs, hitBombs, null, this);
 
-	//Tirer
-
-	boutonFeu = this.input.keyboard.addKey('F');
 
 	//Potion
 
@@ -262,8 +287,9 @@ function create(){
 	this.physics.add.collider(potions, sol);
 	this.physics.add.overlap(potions, player, collectPotion, null, this);
 	this.physics.add.overlap(potions, playerj, collectPotionj, null, this);
-}
 
+
+}
 
 //Fonction touché par la bombe
 
@@ -329,24 +355,6 @@ function collectGlandj(playerj, gland){
 	};
 }
 
-//fonction tir
-
-function tirer(player) {
-        var coefDir;
-	    if (player.direction == 'left') { 
-	    	coefDir = -1; 
-	    } 
-
-	    else { 
-	    	coefDir = 1; 
-	    }
-        // on crée la balle a coté du joueur
-        var bullet = groupeBullets.create(player.x + (25 * coefDir), player.y - 4, 'bullet');
-        // parametres physiques de la balle.
-        bullet.setCollideWorldBounds(true);
-        bullet.body.allowGravity =false;
-        bullet.setVelocity(1000 * coefDir, 0); // vitesse en x et en y
-}
 
 //Fonction potion
 
@@ -445,16 +453,18 @@ function update() {
 	}
 
 	if (cursors.left.isDown){
-		player.anims.play('left', true);
+		player.direction = 'left';
+		player.anims.play('right', true);
 		player.setVelocityX(-150);
 		player.setFlipX(true);
 		if(keys.A.isDown){
-			player.anims.play('left', true);
+			player.anims.play('right', true);
 			player.setFlipX(true);
 			player.setVelocityX(-200);
 		}
 	}
 	else if (cursors.right.isDown){
+		player.direction = 'right';
 		player.anims.play('left', true);
 		player.setFlipX(false);
 		player.setVelocityX(150);
@@ -500,6 +510,10 @@ function update() {
 	if (cursors.up.isUp){
 		sauveSaut = 1;
 	}
+
+	if ( Phaser.Input.Keyboard.JustDown(boutonFeu)) {
+            tirer(player);
+        }
 
 
 	//Déplacement du Joueur 2
@@ -616,5 +630,30 @@ function update() {
 		tard1.setVelocityX(200);
 
 	}
-
 }
+
+function tirer(player) {
+        var coefDir;
+	    if (player.direction == 'left') { coefDir = -1; } else { coefDir = 1 }
+        // on crée la balle a coté du joueur
+        var bullet = groupeBullets.create(player.x + (25 * coefDir), player.y - 4, 'bullet');
+        // parametres physiques de la balle.
+        bullet.setCollideWorldBounds(true);
+        bullet.body.allowGravity =false;
+        bullet.setVelocity(1000 * coefDir, 0); // vitesse en x et en y
+}
+
+function hit (bullet, cible) {
+  cible.pointsVie--;
+  if (cible.pointsVie==0) {
+    cible.destroy(); 
+  } 
+   bullet.destroy();
+}
+
+
+/*function destroy (bullet) {
+	if(bullet.x >= 999){
+	    bullet.destroy();
+	}
+}*/
