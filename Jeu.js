@@ -61,6 +61,7 @@ function preload(){
 	this.load.image('potions','assets/potion.png');
 	this.load.spritesheet('tard','assets/Tard.png', {frameWidth: 24, frameHeight: 22});
 	this.load.image('bullet', 'assets/bullet.png');
+	
 
 }
 
