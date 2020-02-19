@@ -3,9 +3,6 @@ class Scene1 extends Phaser.Scene {
         super("Scene_1");
     }
 
-
-
-
 	init(){
 		this.platforms;
 		this.sol;
@@ -36,6 +33,7 @@ class Scene1 extends Phaser.Scene {
 		this.aideBombText;
 	}
 
+
 	preload(){
 		this.load.image('background','assets/back.png');
 		this.load.image('platform', 'assets/platform.png');
@@ -62,6 +60,10 @@ class Scene1 extends Phaser.Scene {
 		//Monde
 		
 		this.add.image(500,300,'background');
+
+
+
+	//Fonction touché par la bombe
 
 
 		this.door = this.physics.add.staticGroup();
@@ -338,8 +340,8 @@ class Scene1 extends Phaser.Scene {
 
 		if (this.cursors.space.isDown){
 			this.registry.destroy(); // destroy registry
-			this.events.off();﻿ // disable all active events
-			this.scene.restart();﻿﻿﻿﻿ // restart current scene
+			this.events.off(); // disable all active events
+			this.scene.restart(); // restart current scene
 		}
 
 		if (this.cursors.left.isDown){
