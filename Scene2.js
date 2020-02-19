@@ -1,6 +1,6 @@
-class Scene3 extends Phaser.Scene {
+class Scene2 extends Phaser.Scene {
     constructor() {
-        super("Scene_3");
+        super("Scene_2");
     }
 
 
@@ -60,6 +60,7 @@ create(){
 	this.platforms.create(900,150, 'platform');
 	this.platforms.create(800,450, 'platform');
 	this.platforms.create(220,480, 'platform');
+	this.platforms.create(220,550, 'platform');
 
 
 	this.sol = this.physics.add.staticGroup();
@@ -196,27 +197,6 @@ create(){
 	this.tard1.body.setGravityY(200);
 	this.physics.add.collider(this.tard1,this.platforms);
 	this.physics.add.collider(this.tard1,this.sol);
-
-	this.tard2 = this.physics.add.sprite(850,400,'tard');
-	this.tard2.setCollideWorldBounds(true);
-	this.tard2.setBounce(0.02);
-	this.tard2.body.setGravityY(200);
-	this.physics.add.collider(this.tard2,this.platforms);
-	this.physics.add.collider(this.tard2,this.sol);
-
-	this.tard3 = this.physics.add.sprite(560,220,'tard');
-	this.tard3.setCollideWorldBounds(true);
-	this.tard3.setBounce(0.02);
-	this.tard3.body.setGravityY(200);
-	this.physics.add.collider(this.tard3,this.platforms);
-	this.physics.add.collider(this.tard3,this.sol);
-
-	this.tard4 = this.physics.add.sprite(660,320,'tard');
-	this.tard4.setCollideWorldBounds(true);
-	this.tard4.setBounce(0.02);
-	this.tard4.body.setGravityY(200);
-	this.physics.add.collider(this.tard4,this.platforms);
-	this.physics.add.collider(this.tard4,this.sol);
 	
 	
 	this.anims.create({
@@ -289,10 +269,6 @@ create(){
 	this.physics.add.overlap(this.groupeBullets, this.playerj, hitJ, null, this);
 	this.physics.add.collider(this.player, this.tard, hitTard, null, this);
 	this.physics.add.collider(this.player, this.tard1, hitTard1, null, this);
-	this.physics.add.collider(this.player, this.tard2, hitTard2, null, this);
-	this.physics.add.collider(this.player, this.tard3, hitTard3, null, this);
-	this.physics.add.collider(this.player, this.tard4, hitTard4, null, this);
-
 
 
 	//Fonction touché par la bombe
@@ -319,7 +295,8 @@ create(){
 		}
 	}
 
-	function hitTard4(player, tard4){
+
+	function hitTard1(player, tard){
 		if(this.vie == 3){
 			this.vie --;
 		}
@@ -329,38 +306,7 @@ create(){
 		}
 	}
 
-	function hitTard3(player, tard3){
-		if(this.vie == 3){
-			this.vie --;
-		}
-
-		if(this.vie == 1){
-			this.vie --;
-		}
-	}
-
-	function hitTard2(player, tard2){
-		if(this.vie == 3){
-			this.vie --;
-		}
-
-		if(this.vie == 1){
-			this.vie --;
-		}
-	}
-
-	function hitTard1(player, tard1){
-		if(this.vie == 3){
-			this.vie --;
-		}
-
-		if(this.vie == 1){
-			this.vie --;
-		}
-	}
-
-
-	function hitTard(player, tard){
+	function hitTard(player, tard1){
 		if(this.vie == 2){
 			this.vie --;
 		}
@@ -459,7 +405,6 @@ update() {
 		this.gameOver = true;
 		this.score = 0;
 		this.vie = 3;
-		this.scorej = 0;
 		this.viej = 3;
 	}
 	if(this.vie == 3){
@@ -488,9 +433,6 @@ update() {
 		this.physics.pause();
 		this.playerj.setTint(0xff0000);
 		this.playerj.anims.play('turn');
-		this.gameOverTextj.visible = true;
-		this.gameOverj = true;
-		this.scorej = 0;
 		this.viej = 3;
 		this.score = 0;
 		this.vie = 3;
@@ -582,12 +524,12 @@ update() {
     	this.tweens.add({
 	    	targets: this.playerj,
 	   	 	
-	   	 	x : -100,
+	   	 	x : 280,
 	    	// alpha: { start: 0, to: 1 },
 	    	// alpha: 1,
 	    	// alpha: '+=1',
 	    	ease: 'Linear',       // 'Cubic', 'Elastic', 'Bounce', 'Back'
-	    	duration: 6000,
+	    	duration: 3000,
 	    	repeat: -1,            // -1: infinity
 	    	yoyo: false
 		});
@@ -683,120 +625,9 @@ update() {
 	    	repeat: 0,            // -1: infinity
 	    	yoyo: false
 		});
-		this.tard1.anims.play('mvt_tard', true);
+		this.tard1.anims.play('mvt_tard1', true);
 		this.tard1.setFlipX(false);
 		this.tard1.setVelocityX(200);
-
-	}
-
-	if (this.tard2.x >= 840){
-    	this.tweens.add({
-	    	targets: this.tard2,
-	   	 	
-	   	 	x : 500,
-	    	// alpha: { start: 0, to: 1 },
-	    	// alpha: 1,
-	    	// alpha: '+=1',
-	    	ease: 'Linear',       // 'Cubic', 'Elastic', 'Bounce', 'Back'
-	    	duration: 8000,
-	    	repeat: -1,            // -1: infinity
-	    	yoyo: false
-		});
-		this.tard2.anims.play('mvt_tard', true);
-		this.tard2.setVelocityX(-200);
-		this.tard2.setFlipX(true);
-	}
-	
-	if (this.tard2.x <= 760){
-		this.tweens.add({
-	    	targets: this.tard2,
-	   	 	
-	   	 	x : 1100,
-	    	// alpha: { start: 0, to: 1 },
-	    	// alpha: 1,
-	    	// alpha: '+=1',
-	    	ease: 'Linear',       // 'Cubic', 'Elastic', 'Bounce', 'Back'
-	    	duration: 8000,
-	    	repeat: 0,            // -1: infinity
-	    	yoyo: false
-		});
-		this.tard2.anims.play('mvt_tard', true);
-		this.tard2.setFlipX(false);
-		this.tard2.setVelocityX(200);
-
-	}
-
-	if (this.tard3.x >= 540){
-    	this.tweens.add({
-	    	targets: this.tard3,
-	   	 	
-	   	 	x : -100,
-	    	// alpha: { start: 0, to: 1 },
-	    	// alpha: 1,
-	    	// alpha: '+=1',
-	    	ease: 'Linear',       // 'Cubic', 'Elastic', 'Bounce', 'Back'
-	    	duration: 8000,
-	    	repeat: -1,            // -1: infinity
-	    	yoyo: false
-		});
-		this.tard3.anims.play('mvt_tard', true);
-		this.tard3.setVelocityX(-200);
-		this.tard3.setFlipX(true);
-	}
-	
-	if (this.tard3.x <= 460){
-		this.tweens.add({
-	    	targets: this.tard3,
-	   	 	
-	   	 	x : 1000,
-	    	// alpha: { start: 0, to: 1 },
-	    	// alpha: 1,
-	    	// alpha: '+=1',
-	    	ease: 'Linear',       // 'Cubic', 'Elastic', 'Bounce', 'Back'
-	    	duration: 8000,
-	    	repeat: 0,            // -1: infinity
-	    	yoyo: false
-		});
-		this.tard3.anims.play('mvt_tard', true);
-		this.tard3.setFlipX(false);
-		this.tard3.setVelocityX(200);
-
-	}
-
-	if (this.tard4.x >= 640){
-    	this.tweens.add({
-	    	targets: this.tard4,
-	   	 	
-	   	 	x : 400,
-	    	// alpha: { start: 0, to: 1 },
-	    	// alpha: 1,
-	    	// alpha: '+=1',
-	    	ease: 'Linear',       // 'Cubic', 'Elastic', 'Bounce', 'Back'
-	    	duration: 8000,
-	    	repeat: -1,            // -1: infinity
-	    	yoyo: false
-		});
-		this.tard4.anims.play('mvt_tard', true);
-		this.tard4.setVelocityX(-200);
-		this.tard4.setFlipX(true);
-	}
-	
-	if (this.tard4.x <= 560){
-		this.tweens.add({
-	    	targets: this.tard4,
-	   	 	
-	   	 	x : 700,
-	    	// alpha: { start: 0, to: 1 },
-	    	// alpha: 1,
-	    	// alpha: '+=1',
-	    	ease: 'Linear',       // 'Cubic', 'Elastic', 'Bounce', 'Back'
-	    	duration: 8000,
-	    	repeat: 0,            // -1: infinity
-	    	yoyo: false
-		});
-		this.tard4.anims.play('mvt_tard', true);
-		this.tard4.setFlipX(false);
-		this.tard4.setVelocityX(200);
 
 	}
 
@@ -805,10 +636,12 @@ update() {
 	}
 
 	if(this.player.x > 900 && this.player.y <= 250 ){
-		
+		this.scene.start('Scene_3');
 	}
 
-
+	if(this.keys.D.isDown){
+		this.scene.start('Scene_3');
+	}
 }
 
 
