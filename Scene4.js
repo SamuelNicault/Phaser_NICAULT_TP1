@@ -29,6 +29,7 @@ init(){
 	this.sprite;
 	this.groupeBullets;
 	this.tir = 2;
+	this.skull;
 }
 
 preload(){
@@ -226,12 +227,16 @@ create(){
 
 	//Enemies volants
 
-	
 	this.skull = this.physics.add.sprite(100,100,'skull');
 	this.skull.setCollideWorldBounds(true);
 	this.skull.body.setGravityY(0);
+
+	this.skulls = this.physics.add.group();
 	this.physics.add.collider(this.skull,this.platforms);
 	this.physics.add.collider(this.skull,this.sol);
+	this.physics.add.collider(this.player, this.skull, hitSkull, null, this);
+	
+	
 
 	
 	this.anims.create({
@@ -243,14 +248,12 @@ create(){
 
 	this.anims.create({
 		key: 'mvt_skull',
-		frames: this.anims.generateFrameNumbers('skull', {start: 3, end: 9}),
+		frames: this.anims.generateFrameNumbers('skull', {start: 3, end: 13}),
 		frameRate: 5,
 		repeat: -1
 	});
 	
 
-	
-	
 
 	//Glands
 
@@ -326,6 +329,14 @@ create(){
 	function hitTard(player, tard){
 		this.vie --;
 	}
+
+	//Fonction toucher par skull 
+
+	function hitSkull(player, skull){
+		this.vie --;
+		skull.destroy(true);
+	}
+
 	//Fonction récupération Glands
 
 	function collectGland(player, gland){
@@ -409,6 +420,7 @@ create(){
 	  } 
 	   bullet.destroy();
 	}
+
 
 }
 
