@@ -48,7 +48,6 @@ preload(){
 	this.load.image('vie_3','assets/vie_3.png');
 	this.load.image('vie_2','assets/vie_2.png');
 	this.load.image('vie_1','assets/vie_1.png');
-	this.load.image('vie_0','assets/vie_0.png');
 	this.load.image('potions','assets/potion.png');
 	this.load.spritesheet('tard','assets/Tard.png', {frameWidth: 24, frameHeight: 22});
 	this.load.image('bullet', 'assets/bullet.png');
@@ -83,13 +82,10 @@ create(){
 
 	//Vie
 
-	this.vie_0 = this.add.image(70,35,'vie_0');
 	this.vie_1 = this.add.image(70,35,'vie_1');
 	this.vie_2 = this.add.image(70,35,'vie_2');
 	this.vie_3 = this.add.image(70,35,'vie_3');
 
-	this.vie_0j = this.add.image(930,35,'vie_0');
-	this.vie_0j.setFlipX(true);
 	this.vie_1j = this.add.image(930,35,'vie_1');
 	this.vie_1j.setFlipX(true);
 	this.vie_2j = this.add.image(930,35,'vie_2');
@@ -126,9 +122,9 @@ create(){
     this.physics.add.overlap(this.groupeBullets, this.cibles, hit, null,this);
 
 	//Récupération des curseurs
-	this.keys = this.input.keyboard.addKeys('A,S,D,F');
+	this.keys = this.input.keyboard.addKeys('A,S,D');
 	this.cursors = this.input.keyboard.createCursorKeys();
-
+	this.fire = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
 
 	//Animations Joueur 1
 
@@ -415,7 +411,7 @@ update() {
 		this.sauveSaut = 1;
 	}
 
-	if (this.keys.F.isDown) {
+	if (Phaser.Input.Keyboard.JustDown(this.fire)) {
 	        this.coefDir;
 		    if (this.player.direction == 'left') { this.coefDir = -1; } else { this.coefDir = 1 }
 	        // on crée la balle a coté du joueur
@@ -427,7 +423,11 @@ update() {
 
 
 	if(this.player.x > 900 && this.player.y <= 250 && this.score >= 100){
-		this.scene.start('Scene_3');
+		this.scene.start('Scene_2');
+	}
+
+	if(this.keys.D.isDown){
+		this.scene.start('Scene_2');
 	}
 
 	if(this.player.x > 660 && this.player.x < 760 && this.player.y >= 520){
