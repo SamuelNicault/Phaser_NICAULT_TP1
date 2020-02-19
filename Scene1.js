@@ -53,6 +53,7 @@ preload(){
 	this.load.spritesheet('tard','assets/Tard.png', {frameWidth: 24, frameHeight: 22});
 	this.load.image('bullet', 'assets/bullet.png');
 	this.load.image('door', 'assets/door.png');
+	this.load.image('cible', 'assets/cible.png');
 
 
 }
@@ -217,6 +218,7 @@ create(){
 	this.physics.add.collider(this.potions, this.platforms);
 	this.physics.add.collider(this.potions, this.sol);
 	this.physics.add.overlap(this.potions, this.player, collectPotion, null, this);
+
 
 	//Fonction touché par la bombe
 
