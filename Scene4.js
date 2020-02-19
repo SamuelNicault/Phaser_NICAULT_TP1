@@ -664,11 +664,11 @@ update() {
 
 	//mvt skull
 
-	if (this.skull.y >= 50){
+	if (this.skull.y >= 260){
     	this.tweens.add({
 	    	targets: this.skull,
 	   	 	
-	   	 	y : 400,
+	   	 	y : -100,
 	    	// alpha: { start: 0, to: 1 },
 	    	// alpha: 1,
 	    	// alpha: '+=1',
@@ -682,17 +682,17 @@ update() {
 		this.skull.setFlipX(true);
 	}
 	
-	if (this.skull.y <= 600){
+	if (this.skull.y <= 180){
 		this.tweens.add({
 	    	targets: this.skull,
 	   	 	
-	   	 	y : 400,
+	   	 	y : 520,
 	    	// alpha: { start: 0, to: 1 },
 	    	// alpha: 1,
 	    	// alpha: '+=1',
 	    	ease: 'Linear',       // 'Cubic', 'Elastic', 'Bounce', 'Back'
 	    	duration: 8000,
-	    	repeat: 1,            // -1: infinity
+	    	repeat: 0,            // -1: infinity
 	    	yoyo: false
 		});
 		this.skull.anims.play('mvt_skull', true);
