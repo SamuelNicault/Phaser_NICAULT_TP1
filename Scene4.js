@@ -49,7 +49,7 @@ preload(){
 	this.load.image('potions','assets/potion.png');
 	this.load.spritesheet('tard','assets/Tard.png', {frameWidth: 24, frameHeight: 22});
 	this.load.image('bullet', 'assets/bullet.png');
-	this.load.spritesheet('skull','assets/skull.png', {frameWidth: 39, frameHeight: 28});
+	this.load.spritesheet('skull','assets/skull.png', {frameWidth: 44, frameHeight: 30});
 	this.load.image('cible', 'assets/cible.png');
 
 }
@@ -233,8 +233,10 @@ create(){
 
 	this.skulls = this.physics.add.group();
 	this.physics.add.collider(this.skull,this.platforms);
-	this.physics.add.collider(this.skull,this.sol);
+	this.physics.add.overlap(this.player,this.playerj);
 	this.physics.add.collider(this.player, this.skull, hitSkull, null, this);
+	this.physics.add.collider(this.player, this.playerj, hitPlayerJ, null, this);
+	this.physics.add.collider(this.skull,this.sol);
 	
 	
 
@@ -248,7 +250,7 @@ create(){
 
 	this.anims.create({
 		key: 'mvt_skull',
-		frames: this.anims.generateFrameNumbers('skull', {start: 3, end: 13}),
+		frames: this.anims.generateFrameNumbers('skull', {start: 1, end: 7}),
 		frameRate: 5,
 		repeat: -1
 	});
@@ -334,7 +336,7 @@ create(){
 
 	function hitSkull(player, skull){
 		this.vie --;
-		skull.destroy(true);
+
 	}
 
 	//Fonction récupération Glands
