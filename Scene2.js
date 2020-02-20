@@ -15,6 +15,7 @@ init(){
 	this.cursors;
 	this.glands;
 	this.scoreText;
+	this.PigText;
 	this.gameOverText;
 	this.bomb;
 	this.potions
@@ -44,6 +45,8 @@ preload(){
 	this.load.image('potions','assets/potion.png');
 	this.load.spritesheet('tard','assets/Tard.png', {frameWidth: 24, frameHeight: 22});
 	this.load.image('bullet', 'assets/bullet.png');
+	this.load.image('door', 'assets/door.png');
+
 
 }
 
@@ -52,6 +55,9 @@ create(){
 	//Monde
 	
 	this.add.image(500,300,'background');
+
+	this.door = this.physics.add.staticGroup();
+	this.door.create(900,106, 'door');
 
 	this.platforms = this.physics.add.staticGroup();
 	this.platforms.create(600,400, 'platform');
@@ -241,8 +247,10 @@ create(){
 
 	this.scoreText = this.add.text(25,100, 'Score: 0', {fontsize: '32px', fill: '#000'});
 	this.gameOverText = this.add.text(450, 250, "GAME OVER MAN", {fontsize: '128px', fill: '#000'});
-	this.gameOverText.visible = false
+	this.gameOverText.visible = false;
 
+	this.PigText = this.add.text(100, 500, "C'est le roi cochon. Il veut ta couronne !", {'font': '12px', fill: '#fff'});
+	this.TardText = this.add.text(100, 400, "Ces petits dinos sont à ses ordres !", {'font': '12px', fill: '#fff'});
 
 	//Bombes
 
@@ -633,6 +641,20 @@ update() {
 
 	if(this.score >= 320){
 		this.platforms.create(700,200, 'platform');
+	}
+
+	if(this.player.x > 0 && this.player.x < 500 && this.player.y >= 300 && this.score <= 40){
+		this.PigText.visible = true;
+	}
+	else{
+		this.PigText.visible = false;
+	}
+
+	if(this.player.x > 0 && this.player.x < 500 && this.player.y >= 300 && this.score <= 80){
+		this.TardText.visible = true;
+	}
+	else{
+		this.TardText.visible = false;
 	}
 
 	if(this.player.x > 900 && this.player.y <= 250 ){
