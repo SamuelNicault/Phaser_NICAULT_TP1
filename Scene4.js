@@ -3,9 +3,6 @@ class Scene4 extends Phaser.Scene {
         super("Scene_4");
     }
 
-
-
-
 init(){
 	this.platforms;
 	this.sol;
@@ -16,12 +13,9 @@ init(){
 	this.glands;
 	this.scoreText;
 	this.gameOverText;
-	this.scoreTextj;
-	this.gameOverTextj;
 	this.bomb;
 	this.potions
 	this.score = 0;
-	this.scorej = 0;
 	this.vie = 3;
 	this.viej = 3;
 	this.saut = 2;
@@ -45,12 +39,13 @@ preload(){
 	this.load.image('vie_3','assets/vie_3.png');
 	this.load.image('vie_2','assets/vie_2.png');
 	this.load.image('vie_1','assets/vie_1.png');
-	this.load.image('vie_0','assets/vie_0.png');
 	this.load.image('potions','assets/potion.png');
 	this.load.spritesheet('tard','assets/Tard.png', {frameWidth: 24, frameHeight: 22});
 	this.load.image('bullet', 'assets/bullet.png');
 	this.load.spritesheet('skull','assets/skull.png', {frameWidth: 44, frameHeight: 30});
 	this.load.image('cible', 'assets/cible.png');
+
+
 
 }
 
@@ -68,19 +63,17 @@ create(){
 	this.platforms.create(800,450, 'platform');
 	this.platforms.create(220,480, 'platform');
 
+
 	this.sol = this.physics.add.staticGroup();
 	this.sol.create(500,582, 'sol');
 
 
 	//Vie
 
-	this.vie_0 = this.add.image(70,35,'vie_0');
 	this.vie_1 = this.add.image(70,35,'vie_1');
 	this.vie_2 = this.add.image(70,35,'vie_2');
 	this.vie_3 = this.add.image(70,35,'vie_3');
 
-	this.vie_0j = this.add.image(930,35,'vie_0');
-	this.vie_0j.setFlipX(true);
 	this.vie_1j = this.add.image(930,35,'vie_1');
 	this.vie_1j.setFlipX(true);
 	this.vie_2j = this.add.image(930,35,'vie_2');
@@ -110,16 +103,19 @@ create(){
     this.cibles.children.iterate(function (cible) {
         cible.pointsVie=Phaser.Math.Between(1, 5);
         cible.y = Phaser.Math.Between(10,250);
-        cible.setBounce(1);
+        cible.setBounce(0.1);
     });
 
     this.physics.add.collider(this.cibles, this.platforms);
+    this.physics.add.collider(this.cibles, this.sol);
     this.physics.add.collider(this.groupeBullets, this.platforms, destroy, null,this);
     this.physics.add.overlap(this.groupeBullets, this.cibles, hit, null,this);
 
+
 	//Récupération des curseurs
-	this.keys = this.input.keyboard.addKeys('A,S,D,F');
+	this.keys = this.input.keyboard.addKeys('A,S,D');
 	this.cursors = this.input.keyboard.createCursorKeys();
+	this.fire = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
 
 
 	//Animations Joueur 1
@@ -202,6 +198,27 @@ create(){
 	this.tard1.body.setGravityY(200);
 	this.physics.add.collider(this.tard1,this.platforms);
 	this.physics.add.collider(this.tard1,this.sol);
+
+	this.tard2 = this.physics.add.sprite(850,400,'tard');
+	this.tard2.setCollideWorldBounds(true);
+	this.tard2.setBounce(0.02);
+	this.tard2.body.setGravityY(200);
+	this.physics.add.collider(this.tard2,this.platforms);
+	this.physics.add.collider(this.tard2,this.sol);
+
+	this.tard3 = this.physics.add.sprite(560,220,'tard');
+	this.tard3.setCollideWorldBounds(true);
+	this.tard3.setBounce(0.02);
+	this.tard3.body.setGravityY(200);
+	this.physics.add.collider(this.tard3,this.platforms);
+	this.physics.add.collider(this.tard3,this.sol);
+
+	this.tard4 = this.physics.add.sprite(660,320,'tard');
+	this.tard4.setCollideWorldBounds(true);
+	this.tard4.setBounce(0.02);
+	this.tard4.body.setGravityY(200);
+	this.physics.add.collider(this.tard4,this.platforms);
+	this.physics.add.collider(this.tard4,this.sol);
 	
 	
 	this.anims.create({
@@ -225,59 +242,28 @@ create(){
 		repeat: -1
 	});
 
-	//Enemies volants
-
-	this.skull = this.physics.add.sprite(100,100,'skull');
-	this.skull.setCollideWorldBounds(true);
-	this.skull.body.setGravityY(0);
-
-	this.skulls = this.physics.add.group();
-	this.physics.add.collider(this.skull,this.platforms);
-	this.physics.add.overlap(this.player,this.playerj);
-	this.physics.add.collider(this.player, this.skull, hitSkull, null, this);
-	this.physics.add.collider(this.player, this.playerj, hitPlayerJ, null, this);
-	this.physics.add.collider(this.skull,this.sol);
-	
-	
 
 	
-	this.anims.create({
-		key: 'skull',
-		frames: this.anims.generateFrameNumbers('skull', {start: 0, end: 2}),
-		frameRate: 5,
-		repeat: -1
-	});
-
-	this.anims.create({
-		key: 'mvt_skull',
-		frames: this.anims.generateFrameNumbers('skull', {start: 1, end: 7}),
-		frameRate: 5,
-		repeat: -1
-	});
 	
-
+	
 
 	//Glands
 
 	this.glands = this.physics.add.group({
 		key: 'glands',
 		repeat: 0,
-		setXY: {x: 12, y: 1, stepX: 70}
+		setXY: {x: -100, y: 1, stepX: 70}
 	});
 
 	this.physics.add.collider(this.glands, this.platforms);
 	this.physics.add.collider(this.glands, this.sol);
 	this.physics.add.overlap(this.glands, this.player, collectGland, null, this);
-	this.physics.add.overlap(this.glands, this.playerj, collectGlandj, null, this);
 	
 	//Texte
 
 	this.scoreText = this.add.text(25,100, 'Score: 0', {fontsize: '32px', fill: '#000'});
 	this.gameOverText = this.add.text(450, 250, "GAME OVER MAN", {fontsize: '128px', fill: '#000'});
 	this.gameOverText.visible = false
-	this.scoreTextj = this.add.text(900,100, 'Score: 0', {fontsize: '32px', fill: '#000'});
-	this.gameOverTextj = this.add.text(450, 250, 'GAME OVER DIN DON', {fontsize: '128px', fill: '#000'});
-	this.gameOverTextj.visible = false
 
 
 	//Bombes
@@ -302,6 +288,51 @@ create(){
 	this.physics.add.collider(this.potions, this.sol);
 	this.physics.add.overlap(this.potions, this.player, collectPotion, null, this);
 	this.physics.add.overlap(this.potions, this.playerj, collectPotionj, null, this);
+	this.physics.add.overlap(this.groupeBullets, this.playerj, hitJ, null, this);
+	this.physics.add.collider(this.player, this.tard, hitTard, null, this);
+	this.physics.add.collider(this.player, this.tard1, hitTard1, null, this);
+	this.physics.add.collider(this.player, this.tard2, hitTard2, null, this);
+	this.physics.add.collider(this.player, this.tard3, hitTard3, null, this);
+	this.physics.add.collider(this.player, this.tard4, hitTard4, null, this);
+
+
+	//Enemies volants
+
+	this.skull = this.physics.add.sprite(250,100,'skull');
+	this.skull.setCollideWorldBounds(true);
+
+
+	this.skulls = this.physics.add.group();
+	this.physics.add.overlap(this.player,this.playerj);
+	this.physics.add.collider(this.player, this.skull, hitSkull, null, this);
+	this.physics.add.collider(this.skull,this.sol);
+	this.skull.body.setGravityY(-300);
+
+	
+	
+
+	
+	this.anims.create({
+		key: 'skull',
+		frames: this.anims.generateFrameNumbers('skull', {start: 0, end: 2}),
+		frameRate: 5,
+		repeat: -1
+	});
+
+	this.anims.create({
+		key: 'mvt_skull',
+		frames: this.anims.generateFrameNumbers('skull', {start: 1, end: 7}),
+		frameRate: 5,
+		repeat: -1
+	});
+	
+
+	//Fonction toucher par skull 
+
+	function hitSkull(player, skull){
+		this.vie --;
+
+	}
 
 	//Fonction touché par la bombe
 
@@ -327,18 +358,52 @@ create(){
 		}
 	}
 
+	function hitTard4(player, tard4){
+		if(this.vie == 3){
+			this.vie --;
+		}
+
+		if(this.vie == 1){
+			this.vie --;
+		}
+	}
+
+	function hitTard3(player, tard3){
+		if(this.vie == 3){
+			this.vie --;
+		}
+
+		if(this.vie == 1){
+			this.vie --;
+		}
+	}
+
+	function hitTard2(player, tard2){
+		if(this.vie == 3){
+			this.vie --;
+		}
+
+		if(this.vie == 1){
+			this.vie --;
+		}
+	}
+
+	function hitTard1(player, tard1){
+		if(this.vie == 3){
+			this.vie --;
+		}
+
+		if(this.vie == 1){
+			this.vie --;
+		}
+	}
+
 
 	function hitTard(player, tard){
-		this.vie --;
+		if(this.vie == 2){
+			this.vie --;
+		}
 	}
-
-	//Fonction toucher par skull 
-
-	function hitSkull(player, skull){
-		this.vie --;
-
-	}
-
 	//Fonction récupération Glands
 
 	function collectGland(player, gland){
@@ -359,23 +424,7 @@ create(){
 		};
 	}
 
-	function collectGlandj(playerj, gland){
-		this.gland.disableBody(true,true);
-		this.scorej += 10;
-		this.scoreTextj.setText('Score: '+ this.scorej);
-		if (this.glands.countActive(true) === 0){
-			this.glands.children.iterate(function(child){
-				child.enableBody(true,child.x,0, true, true);
-			});
-			var x = (this.playerj.x < 400) ? 
-			Phaser.Math.Between(400,800):
-			Phaser.Math.Between(0,400);
-			var bomb = this.bombs.create(x, 16, 'bombs');
-			this.bomb.setBounce(1);
-			this.bomb.setCollideWorldBounds(true);
-			this.bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
-		};
-	}
+	
 
 
 	//Fonction potion
@@ -395,8 +444,6 @@ create(){
 
 	function collectPotionj(playerj, potion){
 		potion.disableBody(true,true);
-		this.scorej += 10;
-		this.scoreTextj.setText('Score: '+ this.scorej);
 		if (this.potions.countActive(true) === 0){
 			this.potions.children.iterate(function(child){
 				child.enableBody(true,child.x,550, true, true);
@@ -415,14 +462,19 @@ create(){
         this.bullet.setVelocity(1000 * this.coefDir, 0); // vitesse en x et en y*/
 	//}
 
-	function hit (bullet, cible) {
-	  cible.pointsVie--;
-	  if (cible.pointsVie==0) {
-	    cible.destroy(); 
-	  } 
-	   bullet.destroy();
+	function hitJ (bullet, playerj) {
+	  
 	}
 
+	function hit (bullet, cible) {
+		cible.pointsVie--;
+		if (cible.pointsVie==0) {
+			cible.destroy();
+			this.score += 40;
+			this.scoreText.setText('Score: '+ this.score);
+		} 
+		bullet.destroy();
+	}
 
 }
 
@@ -552,7 +604,7 @@ update() {
 		this.sauveSaut = 1;
 	}
 
-	if (this.keys.F.isDown) {
+	if (Phaser.Input.Keyboard.JustDown(this.fire)) {
 	        this.coefDir;
 		    if (this.player.direction == 'left') { this.coefDir = -1; } else { this.coefDir = 1 }
 	        // on crée la balle a coté du joueur
@@ -579,7 +631,7 @@ update() {
 	    	yoyo: false
 		});
 		this.playerj.anims.play('leftj', true);
-		this.playerj.setVelocityX(-100);
+		this.playerj.setVelocityX(-10);
 		this.playerj.setFlipX(false);
 	}
 	
@@ -598,7 +650,7 @@ update() {
 		});
 		this.playerj.anims.play('leftj', true);
 		this.playerj.setFlipX(true);
-		this.playerj.setVelocityX(100);
+		this.playerj.setVelocityX(10);
 
 	}
 
@@ -670,19 +722,17 @@ update() {
 	    	repeat: 0,            // -1: infinity
 	    	yoyo: false
 		});
-		this.tard1.anims.play('mvt_tard1', true);
+		this.tard1.anims.play('mvt_tard', true);
 		this.tard1.setFlipX(false);
 		this.tard1.setVelocityX(200);
 
 	}
 
-	//mvt skull
-
-	if (this.skull.y >= 260){
+	if (this.tard2.x >= 840){
     	this.tweens.add({
-	    	targets: this.skull,
+	    	targets: this.tard2,
 	   	 	
-	   	 	y : -100,
+	   	 	x : 500,
 	    	// alpha: { start: 0, to: 1 },
 	    	// alpha: 1,
 	    	// alpha: '+=1',
@@ -691,16 +741,16 @@ update() {
 	    	repeat: -1,            // -1: infinity
 	    	yoyo: false
 		});
-		this.skull.anims.play('mvt_skull', true);
-		this.skull.setVelocityX(-400);
-		this.skull.setFlipX(true);
+		this.tard2.anims.play('mvt_tard', true);
+		this.tard2.setVelocityX(-200);
+		this.tard2.setFlipX(true);
 	}
 	
-	if (this.skull.y <= 180){
+	if (this.tard2.x <= 760){
 		this.tweens.add({
-	    	targets: this.skull,
+	    	targets: this.tard2,
 	   	 	
-	   	 	y : 520,
+	   	 	x : 1100,
 	    	// alpha: { start: 0, to: 1 },
 	    	// alpha: 1,
 	    	// alpha: '+=1',
@@ -709,11 +759,133 @@ update() {
 	    	repeat: 0,            // -1: infinity
 	    	yoyo: false
 		});
-		this.skull.anims.play('mvt_skull', true);
-		this.skull.setFlipX(false);
-		this.skull.setVelocityX(200);
+		this.tard2.anims.play('mvt_tard', true);
+		this.tard2.setFlipX(false);
+		this.tard2.setVelocityX(200);
 
 	}
+
+	if (this.tard3.x >= 540){
+    	this.tweens.add({
+	    	targets: this.tard3,
+	   	 	
+	   	 	x : -100,
+	    	// alpha: { start: 0, to: 1 },
+	    	// alpha: 1,
+	    	// alpha: '+=1',
+	    	ease: 'Linear',       // 'Cubic', 'Elastic', 'Bounce', 'Back'
+	    	duration: 8000,
+	    	repeat: -1,            // -1: infinity
+	    	yoyo: false
+		});
+		this.tard3.anims.play('mvt_tard', true);
+		this.tard3.setVelocityX(-200);
+		this.tard3.setFlipX(true);
+	}
+	
+	if (this.tard3.x <= 460){
+		this.tweens.add({
+	    	targets: this.tard3,
+	   	 	
+	   	 	x : 1000,
+	    	// alpha: { start: 0, to: 1 },
+	    	// alpha: 1,
+	    	// alpha: '+=1',
+	    	ease: 'Linear',       // 'Cubic', 'Elastic', 'Bounce', 'Back'
+	    	duration: 8000,
+	    	repeat: 0,            // -1: infinity
+	    	yoyo: false
+		});
+		this.tard3.anims.play('mvt_tard', true);
+		this.tard3.setFlipX(false);
+		this.tard3.setVelocityX(200);
+
+	}
+
+	if (this.tard4.x >= 640){
+    	this.tweens.add({
+	    	targets: this.tard4,
+	   	 	
+	   	 	x : 400,
+	    	// alpha: { start: 0, to: 1 },
+	    	// alpha: 1,
+	    	// alpha: '+=1',
+	    	ease: 'Linear',       // 'Cubic', 'Elastic', 'Bounce', 'Back'
+	    	duration: 8000,
+	    	repeat: -1,            // -1: infinity
+	    	yoyo: false
+		});
+		this.tard4.anims.play('mvt_tard', true);
+		this.tard4.setVelocityX(-200);
+		this.tard4.setFlipX(true);
+	}
+	
+	if (this.tard4.x <= 560){
+		this.tweens.add({
+	    	targets: this.tard4,
+	   	 	
+	   	 	x : 700,
+	    	// alpha: { start: 0, to: 1 },
+	    	// alpha: 1,
+	    	// alpha: '+=1',
+	    	ease: 'Linear',       // 'Cubic', 'Elastic', 'Bounce', 'Back'
+	    	duration: 8000,
+	    	repeat: 0,            // -1: infinity
+	    	yoyo: false
+		});
+		this.tard4.anims.play('mvt_tard', true);
+		this.tard4.setFlipX(false);
+		this.tard4.setVelocityX(200);
+
+	}
+
+
+	//mvt skull
+
+	if (this.skull.y >= 300){
+    	this.tweens.add({
+	    	targets: this.skull,
+	   	 	
+	   	 	y : -100,
+	    	// alpha: { start: 0, to: 1 },
+	    	// alpha: 1,
+	    	// alpha: '+=1',
+	    	ease: 'Linear',       // 'Cubic', 'Elastic', 'Bounce', 'Back'
+	    	duration: 5000,
+	    	repeat: 0,            // -1: infinity
+	    	yoyo: false
+		});
+		this.skull.anims.play('mvt_skull', true);
+		this.skull.setFlipX(false);
+	}
+	
+	if (this.skull.y <= 100){
+		this.tweens.add({
+	    	targets: this.skull,
+	   	 	
+	   	 	y : 520,
+	    	// alpha: { start: 0, to: 1 },
+	    	// alpha: 1,
+	    	// alpha: '+=1',
+	    	ease: 'Linear',       // 'Cubic', 'Elastic', 'Bounce', 'Back'
+	    	duration: 5000,
+	    	repeat: 0,            // -1: infinity
+	    	yoyo: false
+		});
+		this.skull.anims.play('mvt_skull', true);
+		this.skull.setFlipX(true);
+
+	}
+
+
+	if(this.score >= 320){
+		this.platforms.create(700,200, 'platform');
+	}
+
+	if(this.player.x > 900 && this.player.y <= 250 ){
+		
+	}
+
 
 }
 

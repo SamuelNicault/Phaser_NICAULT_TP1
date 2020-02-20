@@ -51,6 +51,8 @@ class Scene1 extends Phaser.Scene {
 		this.load.spritesheet('tard','assets/Tard.png', {frameWidth: 24, frameHeight: 22});
 		this.load.image('bullet', 'assets/bullet.png');
 		this.load.image('door', 'assets/door.png');
+		this.load.image('cible', 'assets/cible.png');
+
 
 
 	}
@@ -125,7 +127,7 @@ class Scene1 extends Phaser.Scene {
 	    this.physics.add.overlap(this.groupeBullets, this.cibles, hit, null,this);
 
 		//Récupération des curseurs
-		this.keys = this.input.keyboard.addKeys('A,S,D');
+		this.keys = this.input.keyboard.addKeys('A,S,P');
 		this.cursors = this.input.keyboard.createCursorKeys();
 		this.fire = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
 
@@ -428,7 +430,7 @@ class Scene1 extends Phaser.Scene {
 			this.scene.start('Scene_2');
 		}
 
-		if(this.keys.D.isDown){
+		if(this.keys.P.isDown){
 			this.scene.start('Scene_2');
 		}
 
@@ -467,7 +469,7 @@ class Scene1 extends Phaser.Scene {
 			this.aideSortie1Text.visible = false;
 		}
 		
-		if(this.score >= 50 && this.score < 80){
+		if(this.score >= 50 && this.score < 110){
 			this.aideBombText.visible = true;
 		}
 		else{
