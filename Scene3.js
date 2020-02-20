@@ -3,9 +3,6 @@ class Scene3 extends Phaser.Scene {
         super("Scene_3");
     }
 
-
-
-
 init(){
 	this.platforms;
 	this.sol;
@@ -16,6 +13,7 @@ init(){
 	this.glands;
 	this.scoreText;
 	this.gameOverText;
+	this.aideSkullText;
 	this.bomb;
 	this.potions
 	this.score = 0;
@@ -26,6 +24,7 @@ init(){
 	this.sprite;
 	this.groupeBullets;
 	this.tir = 2;
+	this.skull;
 }
 
 preload(){
@@ -44,7 +43,8 @@ preload(){
 	this.load.image('potions','assets/potion.png');
 	this.load.spritesheet('tard','assets/Tard.png', {frameWidth: 24, frameHeight: 22});
 	this.load.image('bullet', 'assets/bullet.png');
-
+	this.load.spritesheet('skull','assets/skull.png', {frameWidth: 44, frameHeight: 30});
+	this.load.image('cible', 'assets/cible.png');
 }
 
 create(){
@@ -52,6 +52,10 @@ create(){
 	//Monde
 	
 	this.add.image(500,300,'background');
+
+
+	this.door = this.physics.add.staticGroup();
+	this.door.create(900,106, 'door');
 
 	this.platforms = this.physics.add.staticGroup();
 	this.platforms.create(600,400, 'platform');
@@ -111,7 +115,7 @@ create(){
 
 
 	//Récupération des curseurs
-	this.keys = this.input.keyboard.addKeys('A,S,D');
+	this.keys = this.input.keyboard.addKeys('A,S,P');
 	this.cursors = this.input.keyboard.createCursorKeys();
 	this.fire = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
 
@@ -203,20 +207,6 @@ create(){
 	this.tard2.body.setGravityY(200);
 	this.physics.add.collider(this.tard2,this.platforms);
 	this.physics.add.collider(this.tard2,this.sol);
-
-	this.tard3 = this.physics.add.sprite(560,220,'tard');
-	this.tard3.setCollideWorldBounds(true);
-	this.tard3.setBounce(0.02);
-	this.tard3.body.setGravityY(200);
-	this.physics.add.collider(this.tard3,this.platforms);
-	this.physics.add.collider(this.tard3,this.sol);
-
-	this.tard4 = this.physics.add.sprite(660,320,'tard');
-	this.tard4.setCollideWorldBounds(true);
-	this.tard4.setBounce(0.02);
-	this.tard4.body.setGravityY(200);
-	this.physics.add.collider(this.tard4,this.platforms);
-	this.physics.add.collider(this.tard4,this.sol);
 	
 	
 	this.anims.create({
@@ -263,6 +253,9 @@ create(){
 	this.gameOverText = this.add.text(450, 250, "GAME OVER MAN", {fontsize: '128px', fill: '#000'});
 	this.gameOverText.visible = false
 
+	this.aideSkullText = this.add.text(200, 100, "Des phantoms maintenant ! Et puis quoi encore ???", {'font': '14px', fill: '#fff'});
+	this.aideSkullText.visible = false;
+
 
 	//Bombes
 
@@ -290,10 +283,46 @@ create(){
 	this.physics.add.collider(this.player, this.tard, hitTard, null, this);
 	this.physics.add.collider(this.player, this.tard1, hitTard1, null, this);
 	this.physics.add.collider(this.player, this.tard2, hitTard2, null, this);
-	this.physics.add.collider(this.player, this.tard3, hitTard3, null, this);
-	this.physics.add.collider(this.player, this.tard4, hitTard4, null, this);
 
 
+
+	//Enemies volants
+
+	this.skull = this.physics.add.sprite(250,100,'skull');
+	this.skull.setCollideWorldBounds(true);
+
+
+	this.skulls = this.physics.add.group();
+	this.physics.add.overlap(this.player,this.playerj);
+	this.physics.add.collider(this.player, this.skull, hitSkull, null, this);
+	this.physics.add.collider(this.skull,this.sol);
+	this.skull.body.setGravityY(-300);
+
+	
+	
+
+	
+	this.anims.create({
+		key: 'skull',
+		frames: this.anims.generateFrameNumbers('skull', {start: 0, end: 2}),
+		frameRate: 5,
+		repeat: -1
+	});
+
+	this.anims.create({
+		key: 'mvt_skull',
+		frames: this.anims.generateFrameNumbers('skull', {start: 1, end: 7}),
+		frameRate: 5,
+		repeat: -1
+	});
+	
+
+	//Fonction toucher par skull 
+
+	function hitSkull(player, skull){
+		this.vie --;
+
+	}
 
 	//Fonction touché par la bombe
 
@@ -314,26 +343,6 @@ create(){
 		}
 
 		//A ajouter un cooldown
-		if(this.vie == 1){
-			this.vie --;
-		}
-	}
-
-	function hitTard4(player, tard4){
-		if(this.vie == 3){
-			this.vie --;
-		}
-
-		if(this.vie == 1){
-			this.vie --;
-		}
-	}
-
-	function hitTard3(player, tard3){
-		if(this.vie == 3){
-			this.vie --;
-		}
-
 		if(this.vie == 1){
 			this.vie --;
 		}
@@ -436,7 +445,6 @@ create(){
 		} 
 		bullet.destroy();
 	}
-
 }
 
 update() {
@@ -726,89 +734,62 @@ update() {
 
 	}
 
-	if (this.tard3.x >= 540){
+	//mvt skull
+
+	if (this.skull.y >= 300){
     	this.tweens.add({
-	    	targets: this.tard3,
+	    	targets: this.skull,
 	   	 	
-	   	 	x : -100,
+	   	 	y : -100,
 	    	// alpha: { start: 0, to: 1 },
 	    	// alpha: 1,
 	    	// alpha: '+=1',
 	    	ease: 'Linear',       // 'Cubic', 'Elastic', 'Bounce', 'Back'
-	    	duration: 8000,
-	    	repeat: -1,            // -1: infinity
-	    	yoyo: false
-		});
-		this.tard3.anims.play('mvt_tard', true);
-		this.tard3.setVelocityX(-200);
-		this.tard3.setFlipX(true);
-	}
-	
-	if (this.tard3.x <= 460){
-		this.tweens.add({
-	    	targets: this.tard3,
-	   	 	
-	   	 	x : 1000,
-	    	// alpha: { start: 0, to: 1 },
-	    	// alpha: 1,
-	    	// alpha: '+=1',
-	    	ease: 'Linear',       // 'Cubic', 'Elastic', 'Bounce', 'Back'
-	    	duration: 8000,
+	    	duration: 5000,
 	    	repeat: 0,            // -1: infinity
 	    	yoyo: false
 		});
-		this.tard3.anims.play('mvt_tard', true);
-		this.tard3.setFlipX(false);
-		this.tard3.setVelocityX(200);
-
-	}
-
-	if (this.tard4.x >= 640){
-    	this.tweens.add({
-	    	targets: this.tard4,
-	   	 	
-	   	 	x : 400,
-	    	// alpha: { start: 0, to: 1 },
-	    	// alpha: 1,
-	    	// alpha: '+=1',
-	    	ease: 'Linear',       // 'Cubic', 'Elastic', 'Bounce', 'Back'
-	    	duration: 8000,
-	    	repeat: -1,            // -1: infinity
-	    	yoyo: false
-		});
-		this.tard4.anims.play('mvt_tard', true);
-		this.tard4.setVelocityX(-200);
-		this.tard4.setFlipX(true);
+		this.skull.anims.play('mvt_skull', true);
+		this.skull.setFlipX(false);
 	}
 	
-	if (this.tard4.x <= 560){
+	if (this.skull.y <= 100){
 		this.tweens.add({
-	    	targets: this.tard4,
+	    	targets: this.skull,
 	   	 	
-	   	 	x : 700,
+	   	 	y : 520,
 	    	// alpha: { start: 0, to: 1 },
 	    	// alpha: 1,
 	    	// alpha: '+=1',
 	    	ease: 'Linear',       // 'Cubic', 'Elastic', 'Bounce', 'Back'
-	    	duration: 8000,
+	    	duration: 5000,
 	    	repeat: 0,            // -1: infinity
 	    	yoyo: false
 		});
-		this.tard4.anims.play('mvt_tard', true);
-		this.tard4.setFlipX(false);
-		this.tard4.setVelocityX(200);
+		this.skull.anims.play('mvt_skull', true);
+		this.skull.setFlipX(true);
 
 	}
+
 
 	if(this.score >= 320){
 		this.platforms.create(700,200, 'platform');
 	}
 
 	if(this.player.x > 900 && this.player.y <= 250 ){
-		
+		this.scene.start('Scene_4');
 	}
 
+	if(this.keys.P.isDown){
+		this.scene.start('Scene_4');
+	}
 
+	if(this.player.x > 0 && this.player.x < 500 && this.score <= 80){
+		this.aideSkullText.visible = true;
+	}
+	else{
+		this.aideSkullText.visible = false;
+	}
 }
 
 
