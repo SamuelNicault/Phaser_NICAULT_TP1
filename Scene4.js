@@ -842,7 +842,10 @@ update() {
 
 	//mvt skull
 
+
 	if (this.skull.y >= 300){
+
+	if (this.skull.y >= 180){
     	this.tweens.add({
 	    	targets: this.skull,
 	   	 	
@@ -859,7 +862,10 @@ update() {
 		this.skull.setFlipX(false);
 	}
 	
+
 	if (this.skull.y <= 100){
+
+	if (this.skull.y <= 260){
 		this.tweens.add({
 	    	targets: this.skull,
 	   	 	
