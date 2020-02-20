@@ -5,6 +5,7 @@ class Scene1 extends Phaser.Scene {
 
 	init(){
 		this.platforms;
+		this.platforms1;
 		this.sol;
 		this.player;
 		this.playerj;
@@ -72,6 +73,7 @@ class Scene1 extends Phaser.Scene {
 		this.door.create(900,106, 'door');
 
 		this.platforms = this.physics.add.staticGroup();
+		
 		this.platforms.create(600,400, 'platform');
 		this.platforms.create(500,300, 'platform');
 		this.platforms.create(50,250, 'platform');
@@ -80,6 +82,8 @@ class Scene1 extends Phaser.Scene {
 		this.platforms.create(220,480, 'platform');
 		this.platforms.create(700,200, 'platform');
 
+		this.platforms1 = this.physics.add.staticGroup();
+		
 
 		this.sol = this.physics.add.staticGroup();
 		this.sol.create(500,582, 'sol');
@@ -108,6 +112,7 @@ class Scene1 extends Phaser.Scene {
 		this.player.body.setGravityY(200);
 		this.physics.add.collider(this.player,this.platforms);
 		this.physics.add.collider(this.player,this.sol);
+		this.physics.add.overlap(this.player,this.door, fadeLevel, null, this);
 
 		this.groupeBullets = this.physics.add.group();
 	        
@@ -297,6 +302,16 @@ class Scene1 extends Phaser.Scene {
 		   bullet.destroy();
 		}
 
+		function fadeLevel(player, door) {
+			this.cameras.main.fade(0xff,4000);
+			this.timedEvent = this.time.delayedCall(500, changeLevel, [], this);
+		}
+
+		function changeLevel () {
+			console.log('change de level');
+			this.scene.start('Scene_2');
+		}
+
 	}
 
 	update() {
@@ -426,12 +441,19 @@ class Scene1 extends Phaser.Scene {
 	    }
 
 
-		if(this.player.x > 900 && this.player.y <= 250 && this.score >= 100){
+		if(this.keys.P.isDown){
 			this.scene.start('Scene_2');
 		}
 
-		if(this.keys.P.isDown){
-			this.scene.start('Scene_2');
+		if(this.score<=0){
+			this.platforms1.create(800,100, 'platform').setAlpha(0);
+			this.platforms1.create(800,70, 'platform').setAlpha(0);
+			this.platforms1.create(800,30, 'platform').setAlpha(0);
+		}
+
+		if(this.score>=100){
+			this.platforms1.destroy(true);
+
 		}
 
 		if(this.player.x > 460 && this.player.x < 760 && this.player.y >= 520){
