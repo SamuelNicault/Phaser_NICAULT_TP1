@@ -100,6 +100,8 @@ create(){
 	this.player.body.setGravityY(200);
 	this.physics.add.collider(this.player,this.platforms);
 	this.physics.add.collider(this.player,this.sol);
+	this.physics.add.overlap(this.player,this.door, fadeLevel, null, this);
+
 
 	this.groupeBullets = this.physics.add.group();
         
@@ -395,6 +397,16 @@ create(){
 		bullet.destroy();
 	}
 
+	function fadeLevel(player, door) {
+		this.cameras.main.fade(0xff,4000);
+		this.timedEvent = this.time.delayedCall(500, changeLevel, [], this);
+	}
+
+	function changeLevel () {
+		console.log('change de level');
+		this.scene.start('Scene_3');
+	}
+
 }
 
 update() {
@@ -661,9 +673,6 @@ update() {
 		this.TardText.visible = false;
 	}
 
-	if(this.player.x > 900 && this.player.y <= 250 ){
-		this.scene.start('Scene_3');
-	}
 
 	if(this.keys.P.isDown){
 		this.scene.start('Scene_3');
