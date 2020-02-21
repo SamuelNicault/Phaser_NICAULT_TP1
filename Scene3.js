@@ -64,6 +64,8 @@ create(){
 	this.platforms.create(900,150, 'platform');
 	this.platforms.create(800,450, 'platform');
 	this.platforms.create(220,480, 'platform');
+	this.platforms.create(220,200, 'platform');
+
 
 
 	this.sol = this.physics.add.staticGroup();
@@ -93,7 +95,7 @@ create(){
 	this.player.body.setGravityY(200);
 	this.physics.add.collider(this.player,this.platforms);
 	this.physics.add.collider(this.player,this.sol);
-		this.physics.add.overlap(this.player,this.door, fadeLevel, null, this);
+	this.physics.add.overlap(this.player,this.door, fadeLevel, null, this);
 
 
 	this.groupeBullets = this.physics.add.group();
@@ -455,7 +457,7 @@ create(){
 
 	function changeLevel () {
 		console.log('change de level');
-		this.scene.start('Scene_3');
+		this.scene.start('Scene_4');
 	}
 }
 
