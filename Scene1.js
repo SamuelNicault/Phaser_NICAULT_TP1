@@ -110,7 +110,8 @@ class Scene1 extends Phaser.Scene {
 		this.player.setBounce(0.02);
 		this.player.setCollideWorldBounds(true);
 		this.player.body.setGravityY(200);
-		this.physics.add.collider(this.player,this.platforms);
+		this.physics.add.collider(this.player,this.platforms);		
+		this.physics.add.collider(this.player,this.platforms1);
 		this.physics.add.collider(this.player,this.sol);
 		this.physics.add.overlap(this.player,this.door, fadeLevel, null, this);
 
@@ -445,17 +446,13 @@ class Scene1 extends Phaser.Scene {
 			this.scene.start('Scene_2');
 		}
 
-		if(this.score<=0){
-			this.platforms1.create(800,100, 'platform').setAlpha(0);
-			this.platforms1.create(800,70, 'platform').setAlpha(0);
-			this.platforms1.create(800,30, 'platform').setAlpha(0);
-		}
+		// if(this.score<=0){
+		// 	this.platforms1.create(800,100, 'platform').setAlpha(0);
+		// 	this.platforms1.create(800,70, 'platform').setAlpha(0);
+		// 	this.platforms1.create(800,30, 'platform').setAlpha(0);
+		// }
 
-		if(this.score>=100){
-			this.platforms1.destroy(true);
-
-		}
-
+		
 		if(this.player.x > 460 && this.player.x < 760 && this.player.y >= 520){
 			this.aidePopoText.visible = true;
 		}

@@ -62,6 +62,8 @@ create(){
 	this.platforms.create(900,150, 'platform');
 	this.platforms.create(800,450, 'platform');
 	this.platforms.create(220,480, 'platform');
+	this.platforms.create(220,200, 'platform');
+
 
 
 	this.sol = this.physics.add.staticGroup();
