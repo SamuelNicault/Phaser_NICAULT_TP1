@@ -24,6 +24,9 @@ init(){
 	this.groupeBullets;
 	this.tir = 2;
 	this.skull;
+
+	this.gameOverWText;
+
 }
 
 preload(){
@@ -44,6 +47,8 @@ preload(){
 	this.load.image('bullet', 'assets/bullet.png');
 	this.load.spritesheet('skull','assets/skull.png', {frameWidth: 44, frameHeight: 30});
 	this.load.image('cible', 'assets/cible.png');
+	this.load.image('couronne', 'assets/Couronne.png');
+
 
 
 
@@ -93,6 +98,12 @@ create(){
 	this.player.body.setGravityY(200);
 	this.physics.add.collider(this.player,this.platforms);
 	this.physics.add.collider(this.player,this.sol);
+
+
+	this.couronne = this.physics.add.sprite(900,92, 'couronne');
+	this.couronne.body.setGravityY(-300);
+	this.physics.add.overlap(this.player, this.couronne, collectCrown, null, this);
+
 
 	this.groupeBullets = this.physics.add.group();
         
@@ -263,9 +274,13 @@ create(){
 	
 	//Texte
 
-	this.scoreText = this.add.text(25,100, 'Score: 0', {fontsize: '32px', fill: '#000'});
+	this.scoreText = this.add.text(25,50, 'Score: 0', {fontsize: '32px', fill: '#000'});
 	this.gameOverText = this.add.text(450, 250, "GAME OVER MAN", {fontsize: '128px', fill: '#000'});
 	this.gameOverText.visible = false
+
+	this.gameOverWText = this.add.text(240, 100, "VOICI ENFIN TA COURONNE", {'font' : '40px', fill: '#fff'});
+	this.gameOverWText.visible = false;
+
 
 
 	//Bombes
@@ -478,6 +493,14 @@ create(){
 		bullet.destroy();
 	}
 
+
+	function collectCrown (player, couronne) {
+			this.score += 1000000;
+			this.scoreText.setText("Here come's the MONEY: "+ this.score);
+			this.gameOverWText.visible = true;
+
+	}
+
 }
 
 update() {
@@ -617,6 +640,36 @@ update() {
     }
 	//Déplacement du Joueur 2
 
+	if (this.couronne.y >= 140){
+    	this.tweens.add({
+	    	targets: this.couronne,
+	   	 	
+	   	 	y : -200,
+	    	// alpha: { start: 0, to: 1 },
+	    	// alpha: 1,
+	    	// alpha: '+=1',
+	    	ease: 'Linear',       // 'Cubic', 'Elastic', 'Bounce', 'Back'
+	    	duration: 3000,
+	    	repeat: 0,            // -1: infinity
+	    	yoyo: false
+		});
+	}
+	
+	if (this.couronne.y <= 50){
+		this.tweens.add({
+	    	targets: this.couronne,
+	   	 	
+	   	 	y : 400,
+	    	// alpha: { start: 0, to: 1 },
+	    	// alpha: 1,
+	    	// alpha: '+=1',
+	    	ease: 'Linear',       // 'Cubic', 'Elastic', 'Bounce', 'Back'
+	    	duration: 3000,
+	    	repeat: 0,            // -1: infinity
+	    	yoyo: false
+		});
+
+	}
 
 
     if (this.playerj.x >= this.player.x){
@@ -844,10 +897,7 @@ update() {
 
 	//mvt skull
 
-
 	if (this.skull.y >= 300){
-
-	if (this.skull.y >= 180){
     	this.tweens.add({
 	    	targets: this.skull,
 	   	 	
@@ -864,10 +914,7 @@ update() {
 		this.skull.setFlipX(false);
 	}
 	
-
 	if (this.skull.y <= 100){
-
-	if (this.skull.y <= 260){
 		this.tweens.add({
 	    	targets: this.skull,
 	   	 	
