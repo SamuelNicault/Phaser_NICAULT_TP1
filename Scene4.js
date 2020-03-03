@@ -48,7 +48,7 @@ preload(){
 	this.load.spritesheet('skull','assets/skull.png', {frameWidth: 44, frameHeight: 30});
 	this.load.image('cible', 'assets/cible.png');
 	this.load.image('couronne', 'assets/Couronne.png');
-	
+
 
 
 
@@ -58,7 +58,7 @@ preload(){
 create(){
 
 	//Monde
-	
+
 	this.add.image(500,300,'background');
 
 	this.platforms = this.physics.add.staticGroup();
@@ -88,7 +88,7 @@ create(){
 	this.vie_2j.setFlipX(true);
 	this.vie_3j = this.add.image(930,35,'vie_3');
 	this.vie_3j.setFlipX(true);
-	
+
 
 	//Player 1
 
@@ -107,13 +107,13 @@ create(){
 
 
 	this.groupeBullets = this.physics.add.group();
-        
+
     this.cibles = this.physics.add.group({
         key: 'cible',
         repeat: 7,
         setXY: { x: 12, y: 0, stepX: 110 }
     });
-    
+
     this.cibles.children.iterate(function (cible) {
         cible.pointsVie=Phaser.Math.Between(1, 5);
         cible.y = Phaser.Math.Between(10,250);
@@ -197,8 +197,8 @@ create(){
 	});
 
 
-	// Ennemis 
-	
+	// Ennemis
+
 	this.tard = this.physics.add.sprite(100,100,'tard');
 	this.tard.setCollideWorldBounds(true);
 	this.tard.setBounce(0.02);
@@ -233,8 +233,8 @@ create(){
 	this.tard4.body.setGravityY(200);
 	this.physics.add.collider(this.tard4,this.platforms);
 	this.physics.add.collider(this.tard4,this.sol);
-	
-	
+
+
 	this.anims.create({
 		key: 'idle_tard',
 		frames: this.anims.generateFrameNumbers('tard', {start: 0, end: 2}),
@@ -257,9 +257,9 @@ create(){
 	});
 
 
-	
-	
-	
+
+
+
 
 	//Glands
 
@@ -272,7 +272,7 @@ create(){
 	this.physics.add.collider(this.glands, this.platforms);
 	this.physics.add.collider(this.glands, this.sol);
 	this.physics.add.overlap(this.glands, this.player, collectGland, null, this);
-	
+
 	//Texte
 
 	this.scoreText = this.add.text(25,50, 'Score: 0', {fontsize: '32px', fill: '#000'});
@@ -326,10 +326,10 @@ create(){
 	this.physics.add.collider(this.skull,this.sol);
 	this.skull.body.setGravityY(-300);
 
-	
-	
 
-	
+
+
+
 	this.anims.create({
 		key: 'skull',
 		frames: this.anims.generateFrameNumbers('skull', {start: 0, end: 2}),
@@ -343,9 +343,9 @@ create(){
 		frameRate: 5,
 		repeat: -1
 	});
-	
 
-	//Fonction toucher par skull 
+
+	//Fonction toucher par skull
 
 	function hitSkull(player, skull){
 		this.vie --;
@@ -432,7 +432,7 @@ create(){
 			this.glands.children.iterate(function(child){
 				child.enableBody(true,child.x,0, true, true);
 			});
-			var x = (player.x < 400) ? 
+			var x = (player.x < 400) ?
 			Phaser.Math.Between(400,800):
 			Phaser.Math.Between(0,400);
 			this.bomb = this.bombs.create(x, 16, 'bombs');
@@ -442,7 +442,7 @@ create(){
 		};
 	}
 
-	
+
 
 
 	//Fonction potion
@@ -481,7 +481,7 @@ create(){
 	//}
 
 	function hitJ (bullet, playerj) {
-	  
+
 	}
 
 	function hit (bullet, cible) {
@@ -490,7 +490,7 @@ create(){
 			cible.destroy();
 			this.score += 40;
 			this.scoreText.setText('Score: '+ this.score);
-		} 
+		}
 		bullet.destroy();
 	}
 
@@ -604,12 +604,12 @@ update() {
 	}
 
 
-	
+
 
 	else{
         this.player.anims.play('pause', true);
 		this.player.setVelocityX(0);
-		
+
 	}
 
 
@@ -652,7 +652,7 @@ update() {
 	if (this.couronne.y >= 140){
     	this.tweens.add({
 	    	targets: this.couronne,
-	   	 	
+
 	   	 	y : -200,
 	    	// alpha: { start: 0, to: 1 },
 	    	// alpha: 1,
@@ -663,11 +663,11 @@ update() {
 	    	yoyo: false
 		});
 	}
-	
+
 	if (this.couronne.y <= 50){
 		this.tweens.add({
 	    	targets: this.couronne,
-	   	 	
+
 	   	 	y : 400,
 	    	// alpha: { start: 0, to: 1 },
 	    	// alpha: 1,
@@ -684,7 +684,7 @@ update() {
     if (this.playerj.x >= this.player.x){
     	this.tweens.add({
 	    	targets: this.playerj,
-	   	 	
+
 	   	 	x : -100,
 	    	// alpha: { start: 0, to: 1 },
 	    	// alpha: 1,
@@ -698,11 +698,11 @@ update() {
 		this.playerj.setVelocityX(-10);
 		this.playerj.setFlipX(false);
 	}
-	
+
 	if (this.playerj.x <= this.player.x){
 		this.tweens.add({
 	    	targets: this.playerj,
-	   	 	
+
 	   	 	x : 1100,
 	    	// alpha: { start: 0, to: 1 },
 	    	// alpha: 1,
@@ -721,7 +721,7 @@ update() {
 	if (this.tard.x >= 90){
     	this.tweens.add({
 	    	targets: this.tard,
-	   	 	
+
 	   	 	x : -100,
 	    	// alpha: { start: 0, to: 1 },
 	    	// alpha: 1,
@@ -735,11 +735,11 @@ update() {
 		this.tard.setVelocityX(-200);
 		this.tard.setFlipX(true);
 	}
-	
+
 	if (this.tard.x <= 5){
 		this.tweens.add({
 	    	targets: this.tard,
-	   	 	
+
 	   	 	x : 120,
 	    	// alpha: { start: 0, to: 1 },
 	    	// alpha: 1,
@@ -758,7 +758,7 @@ update() {
 	if (this.tard1.x >= 260){
     	this.tweens.add({
 	    	targets: this.tard1,
-	   	 	
+
 	   	 	x : -100,
 	    	// alpha: { start: 0, to: 1 },
 	    	// alpha: 1,
@@ -772,11 +772,11 @@ update() {
 		this.tard1.setVelocityX(-200);
 		this.tard1.setFlipX(true);
 	}
-	
+
 	if (this.tard1.x <= 180){
 		this.tweens.add({
 	    	targets: this.tard1,
-	   	 	
+
 	   	 	x : 520,
 	    	// alpha: { start: 0, to: 1 },
 	    	// alpha: 1,
@@ -795,7 +795,7 @@ update() {
 	if (this.tard2.x >= 840){
     	this.tweens.add({
 	    	targets: this.tard2,
-	   	 	
+
 	   	 	x : 500,
 	    	// alpha: { start: 0, to: 1 },
 	    	// alpha: 1,
@@ -809,11 +809,11 @@ update() {
 		this.tard2.setVelocityX(-200);
 		this.tard2.setFlipX(true);
 	}
-	
+
 	if (this.tard2.x <= 760){
 		this.tweens.add({
 	    	targets: this.tard2,
-	   	 	
+
 	   	 	x : 1100,
 	    	// alpha: { start: 0, to: 1 },
 	    	// alpha: 1,
@@ -832,7 +832,7 @@ update() {
 	if (this.tard3.x >= 540){
     	this.tweens.add({
 	    	targets: this.tard3,
-	   	 	
+
 	   	 	x : -100,
 	    	// alpha: { start: 0, to: 1 },
 	    	// alpha: 1,
@@ -846,11 +846,11 @@ update() {
 		this.tard3.setVelocityX(-200);
 		this.tard3.setFlipX(true);
 	}
-	
+
 	if (this.tard3.x <= 460){
 		this.tweens.add({
 	    	targets: this.tard3,
-	   	 	
+
 	   	 	x : 1000,
 	    	// alpha: { start: 0, to: 1 },
 	    	// alpha: 1,
@@ -869,7 +869,7 @@ update() {
 	if (this.tard4.x >= 640){
     	this.tweens.add({
 	    	targets: this.tard4,
-	   	 	
+
 	   	 	x : 400,
 	    	// alpha: { start: 0, to: 1 },
 	    	// alpha: 1,
@@ -883,11 +883,11 @@ update() {
 		this.tard4.setVelocityX(-200);
 		this.tard4.setFlipX(true);
 	}
-	
+
 	if (this.tard4.x <= 560){
 		this.tweens.add({
 	    	targets: this.tard4,
-	   	 	
+
 	   	 	x : 700,
 	    	// alpha: { start: 0, to: 1 },
 	    	// alpha: 1,
@@ -909,7 +909,7 @@ update() {
 	if (this.skull.y >= 300){
     	this.tweens.add({
 	    	targets: this.skull,
-	   	 	
+
 	   	 	y : -100,
 	    	// alpha: { start: 0, to: 1 },
 	    	// alpha: 1,
@@ -922,11 +922,11 @@ update() {
 		this.skull.anims.play('mvt_skull', true);
 		this.skull.setFlipX(false);
 	}
-	
+
 	if (this.skull.y <= 100){
 		this.tweens.add({
 	    	targets: this.skull,
-	   	 	
+
 	   	 	y : 520,
 	    	// alpha: { start: 0, to: 1 },
 	    	// alpha: 1,
@@ -946,8 +946,8 @@ update() {
 		this.platforms.create(700,200, 'platform');
 	}
 
-	if(this.player.x > 900 && this.player.y <= 250 ){
-		
+	if(this.player.x > 900 && this.player.y <= 250 && this.score >= 10000000){
+    this.scene.start('Scene_5');
 	}
 
 
