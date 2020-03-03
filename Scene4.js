@@ -946,7 +946,7 @@ update() {
 		this.platforms.create(700,200, 'platform');
 	}
 
-	if(this.player.x > 900 && this.player.y <= 250 && this.score >= 10000000){
+	if(this.player.x > 800 && this.player.y <= 250 && this.score >= 100000000){
     this.scene.start('Scene_5');
 	}
 
