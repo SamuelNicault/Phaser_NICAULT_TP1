@@ -48,6 +48,7 @@ preload(){
 	this.load.spritesheet('skull','assets/skull.png', {frameWidth: 44, frameHeight: 30});
 	this.load.image('cible', 'assets/cible.png');
 	this.load.image('couronne', 'assets/Couronne.png');
+	
 
 
 
@@ -500,7 +501,15 @@ create(){
 			this.gameOverWText.visible = true;
 
 	}
+	function fadeLevel(player, couronne) {
+		this.cameras.main.fade(0xff,4000);
+		this.timedEvent = this.time.delayedCall(5000, changeLevel, [], this);
+	}
 
+	function changeLevel () {
+		console.log('change de level');
+		this.scene.start('Scene_5');
+	}
 }
 
 update() {
